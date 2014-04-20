@@ -1,0 +1,35 @@
+{
+  "name": "generator-fis",
+  "version": "0.1.0",
+  "description": "Yeoman generator,自动化的前端集成解决方案",
+  "license": "MIT",
+  "main": "app/index.js",
+  "repository": "moocss/generator-fis",
+  "author": {
+    "name": "像树一样成长！",
+    "email": "moocss@gmail.com",
+    "url": "https://github.com/moocss"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "~0.16.0",
+    "chalk": "~0.4.0"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "peerDependencies": {
+    "yo": ">=1.0.0"
+  }
+}
