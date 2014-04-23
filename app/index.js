@@ -20,49 +20,104 @@ var FisGenerator = yeoman.generators.Base.extend({
     askFor: function() {
         var done = this.async();
 
-        // have Yeoman greet the user
-        //this.log(this.yeoman);
         //welcome messagef
         this.log(FisLogo(this));
+
+        // have Yeoman greet the user
+        // this.log(this.yeoman);
+        var folderName = path.basename(process.cwd());
+
+        // your-mojo-name => YourMojoName
+        function parseMojoName(name){
+            return name.replace(/\b(\w)|(-\w)/g, function (m) {
+                return m.toUpperCase().replace('-', '');
+            });
+        }
 
         // replace it with a short and sweet description of your generator
         this.log(chalk.magenta('You\'re using the fantastic Fis generator - Greate Webapp.'));
 
-        var prompts = [{
-            name: 'projectName',
-            message: 'Name of Project?'
-        }, {
-            type: 'checkbox',
-            name: 'features',
-            message: 'What would you like to include?',
-            choices: [{
-                name: 'Sass',
-                value: 'includeSass',
-                checked: true
-            }, {
-                name: 'Stylus',
-                value: 'includeStylus',
-                checked: true
-            }, {
-                name: 'jQuery',
-                value: 'includejQuery',
-                checked: true
-            }]
-        }];
+        var prompts = [
+            {
+                name: 'projectName',
+                message: 'Name of Project?',
+                default: folderName,
+                warning:''
+            },
+            {
+                name: 'srcDir',
+                message: 'Create "src" directory?',
+                default: 'Y/n',
+                warning: ''
+            },
+            {
+                name   : 'author',
+                message: 'Author Name:',
+                default: '',
+                warning: ''
+            },
+            {
+                name   : 'email',
+                message: 'Author Email:',
+                default: '',
+                warning: ''
+            },
+            {
+                name   : 'groupName',
+                message: 'Group Name:',
+                default: 'moocss',
+                warning: ''
+            },
+            {
+                type: 'checkbox',
+                name: 'cssCompile',
+                message: '选择一个CSS预编译语言?',
+                choices:[
+                    {
+                        name: 'Sass',
+                        value: 'includeSass',
+                        checked: true
+                    },
+                    {
+                        name: 'Stylus',
+                        value: 'includeStylus',
+                        checked: true
+                    },
+                    {
+                        name: 'Less',
+                        value: 'includeLess',
+                        checked: true
+                    }
+                ]
+            },
+            {
+                name   : 'version',
+                message: 'Version:',
+                default: '0.1.0',
+                warning: ''
+            }
+        ];
 
-        this.prompt(prompts, function(props) {
+        this.prompt(prompts, function (props) {
 
-            this.projectName = props.projectName;
+            this.packageName = props.projectName;// project-name
+            this.projectName = parseMojoName(this.packageName); //ProjectName
+            this.author = props.author;
+            this.email = props.email;
+            this.groupName = props.groupName;
+            this.version = props.version;
+            this.srcDir = (/^y/i).test(props.srcDir);
 
-            var features = props.features;
+
+            var cssCompile = props.cssCompile;
 
             function hasFeature(feat) {
-                return features.indexOf(feat) !== -1;
+                return cssCompile.indexOf(feat) !== -1;
             }
 
             this.includeSass = hasFeature('includeSass');
             this.includeStylus = hasFeature('includeStylus');
-            this.includejQuery = hasFeature('includejQuery');
+            this.includeLess = hasFeature('includeLess');
 
             done();
 
@@ -70,18 +125,24 @@ var FisGenerator = yeoman.generators.Base.extend({
     },
 
     app: function() {
-        //this.mkdir('bower_components');
-        this.mkdir('src');
-        this.mkdir('src/pages');
-        this.mkdir('src/mods');
-        this.mkdir('src/components');
-        this.mkdir('src/pages/css');
-        if (this.includeSass) {
-            this.mkdir('src/pages/css/sass');
+        var that = this;
+        if (this.srcDir) {
+            this.mkdir('src');
+            //this.mkdir('bower_components');
+            this.mkdir('src');
+            this.mkdir('src/pages');
+            this.mkdir('src/mods');
+            this.mkdir('src/components');
+            this.mkdir('src/pages/css');
+            if (this.includeSass) {
+                this.mkdir('src/pages/css/sass');
+            }
+            if (this.includeStylus) {
+                this.mkdir('src/pages/css/stylus');
+            }
         }
-        if (this.includeStylus) {
-            this.mkdir('src/pages/css/stylus');
-        }
+
+        this.template('README.md');
         this.mkdir('dist');
         this.mkdir('tests');
         this.mkdir('docs');

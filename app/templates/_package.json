@@ -1,0 +1,29 @@
+{
+    "name": "<%= projectName %>",
+    "version": "0.0.0",
+    "description": "使用Glup构建前端项目！",
+    "main": "Gulpfile.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "Gulp",
+        "JavaScript"
+    ],
+    "dependencies": {},
+    "devDependencies": {
+        "gulp": "~3.6.1",<% if (includeSass) { %>
+        "gulp-ruby-sass": "^0.4.3",<% } %>
+        "gulp-watch": "~0.6.2",
+        "gulp-plumber": "~0.6.1",
+        "gulp-autoprefixer": "~0.0.7",
+        "gulp-minify-css": "~0.3.1",
+        "gulp-rename": "~1.2.0",
+        "gulp-clean": "~0.2.4"
+    },
+    "engines": {
+        "node": ">=0.10.0"
+    },
+    "author": ["moocss <moocss@gmail.com>"],
+    "license": "MIT"
+}
