@@ -5,9 +5,9 @@ var yeoman = require('yeoman-generator');
 var FisLogo = require('./logo').FisLogo;
 var chalk = require('chalk');
 
-
 var FisGenerator = yeoman.generators.Base.extend({
     init: function() {
+
         this.pkg = require('../package.json');
 
         this.on('end', function() {
@@ -71,12 +71,12 @@ var FisGenerator = yeoman.generators.Base.extend({
             {
                 type: 'checkbox',
                 name: 'cssCompile',
-                message: '选择一个CSS预编译语言?',
+                message: '您选择的CSS预编译语言是?',
                 choices:[
                     {
                         name: 'Sass',
                         value: 'includeSass',
-                        checked: true
+                        checked: false
                     },
                     {
                         name: 'Stylus',
@@ -86,7 +86,7 @@ var FisGenerator = yeoman.generators.Base.extend({
                     {
                         name: 'Less',
                         value: 'includeLess',
-                        checked: true
+                        checked: false
                     }
                 ]
             },
@@ -134,11 +134,17 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.mkdir('src/mods');
             this.mkdir('src/components');
             this.mkdir('src/pages/css');
+            //console.log("includeSass:"+this.includeSass);
+            //console.log("includeSass:"+this.includeStylus);
+            //console.log("includeSass:"+this.includeLess);
             if (this.includeSass) {
                 this.mkdir('src/pages/css/sass');
             }
             if (this.includeStylus) {
                 this.mkdir('src/pages/css/stylus');
+            }
+            if (this.includeLess) {
+                this.mkdir('src/pages/css/less');
             }
         }
 
@@ -186,3 +192,4 @@ var FisGenerator = yeoman.generators.Base.extend({
 });
 
 module.exports = FisGenerator;
+
