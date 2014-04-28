@@ -5,6 +5,16 @@ var gulp = require('gulp');
 // load plugins
 var $ = require('gulp-load-plugins')();
 
+// configurable paths
+var folders = {
+    app: 'app',
+    bliud: 'bliud',
+    dist: 'dist',
+    tmp: '.tmp'
+};
+
+//<%%= folders.tmp %>
+
 // Styles
 gulp.task('css', function () {<% if (includeSass) { %>
     return gulp.src('demo/sass/*.scss')
@@ -65,7 +75,7 @@ gulp.task('images', function () {
 
 // Clean
 gulp.task('clean', function () {
-    return gulp.src(['demo/css', 'demo/js', 'demo/images','.tmp', 'dist'], {read: false}).pipe($.clean());
+    return gulp.src(['demo/css', 'demo/js', 'demo/images', 'dist'], {read: false}).pipe($.clean());
 });
 
 // Build
