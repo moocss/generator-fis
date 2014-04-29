@@ -16,7 +16,7 @@ var folders = {
 //<%%= folders.tmp %>
 
 // Styles
-gulp.task('css', function () {<% if (includeSass) { %>
+gulp.task('styles', function () {<% if (includeSass) { %>
     return gulp.src('demo/sass/*.scss')
         .pipe($.rubySass({
             style: 'expanded',
@@ -35,7 +35,7 @@ gulp.task('css', function () {<% if (includeSass) { %>
 });
 
 // Scripts
-gulp.task('js', function () {
+gulp.task('scripts', function () {
     return gulp.src('demo/js/**/*.js')
         .pipe($.jshint())
         .pipe($.jshint.reporter(require('jshint-stylish')))
@@ -43,7 +43,7 @@ gulp.task('js', function () {
 });
 
 // Html
-gulp.task('html', ['css', 'js'], function () {
+gulp.task('html', ['styles', 'scripts'], function () {
     var jsFilter = $.filter('**/*.js');
     var cssFilter = $.filter('**/*.css');
 
@@ -79,7 +79,7 @@ gulp.task('clean', function () {
 });
 
 // Build
-gulp.task('build', ['html', 'images']);
+gulp.task('build', ['html', 'images','scripts']);
 
 // Default task
 gulp.task('default', ['clean'], function () {
@@ -101,7 +101,7 @@ gulp.task('connect', function (){
 });
 
 // Server
-gulp.task('server', ['connect','css'], function(){
+gulp.task('server', ['connect','styles'], function(){
     require('opn')('http://localhost:9000');
 });
 
@@ -119,7 +119,7 @@ gulp.task('watch', ['connect', 'server'], function (){
         sr.changed(file.path);
     });
 
-    gulp.watch('demo/css/**/*.<%= includeStylus ? 'styl' : 'css' %>', ['css']);
+    gulp.watch('demo/css/**/*.<%= includeStylus ? 'styl' : 'css' %>', ['styles']);
     gulp.watch('demo/js/**/*.js', ['scripts']);
     gulp.watch('demo/images/**/*', ['images']);
 
