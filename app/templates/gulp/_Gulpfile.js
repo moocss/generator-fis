@@ -75,7 +75,7 @@ gulp.task('images', function () {
 
 // Clean
 gulp.task('clean', function () {
-    return gulp.src(['demo/css', 'demo/js', 'demo/images', 'dist'], {read: false}).pipe($.clean());
+    return gulp.src(['demo/**/*', 'dist'], {read: false}).pipe($.clean());
 });
 
 // Build
