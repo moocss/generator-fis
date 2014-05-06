@@ -1,0 +1,18 @@
+
+用法：
+    yo fis              初始化一个 Project
+    yo fis:h            显示帮助
+    yo fis:h5           生成一个H5页面模板
+    yo fis:xt           生成一个HTML4页面模板
+    yo fis:webapp       生成一个完整的网站模板
+    yo fis:mod          初始化一个模块单元
+    yo fis:page         生成一个Page
+    yo fis:components   创建标准的组件
+
+生成项目的默认Grunt命令：
+    gulp                构建项目
+
+工具文档：https://github.com/moocss/generator-fis
+@author by moocss
+
+/*------------------------------------------------------*/
