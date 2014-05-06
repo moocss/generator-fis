@@ -101,6 +101,10 @@ var FisGenerator = yeoman.generators.Base.extend({
                 message: '(7/9) 请您选择的一个CSS预编译语言?',
                 choices: [
                     {
+                        name: 'CSS',
+                        value: 'includeCSS'
+                    },
+                    {
                         name: 'Sass',
                         value: 'includeSass'
                     },
@@ -133,6 +137,11 @@ var FisGenerator = yeoman.generators.Base.extend({
                     {
                         name: 'Less',
                         value: 'includeLess',
+                        checked: false
+                    },
+                    {
+                        name: 'CSS',
+                        value: 'includeCSS',
                         checked: false
                     }
                 ]

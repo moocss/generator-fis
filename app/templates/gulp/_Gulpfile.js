@@ -32,7 +32,8 @@ gulp.task('styles', function () {<% if (includeSass) { %>
         .pipe($.less({
             paths: [ path.join(__dirname, 'less', 'includes') ]
          }))
-        .pipe(gulp.dest('demo/css'))<% } else { %> return gulp.src('demo/css/**/*.css')<% } %>
+        .pipe(gulp.dest('demo/css'))<% } else { %> 
+    return gulp.src('demo/css/**/*.css')<% } %>
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('demo/css'))
         .pipe($.rename({suffix: '.min'}))
