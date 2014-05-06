@@ -17,15 +17,22 @@ var folders = {
 
 // Styles
 gulp.task('styles', function () {<% if (includeSass) { %>
-    return gulp.src('demo/sass/*.scss')
+    return gulp.src('demo/sass/**/*.scss')
         .pipe($.rubySass({
             style: 'expanded',
-            sourcemap: true
-        }))<% } else if (includeStylus) { %>
-    return gulp.src('demo/stylus/*.styl')
-        .pipe($.stylus())
-        .pipe(gulp.dest('demo/css')) <% } else { %>
-    return gulp.src('demo/css/main.css')<% } %>
+            sourcemap: false
+        }))
+        .pipe(gulp.dest('demo/css'))<% } else if (includeStylus) { %>
+        var nib = require('nib');
+    return gulp.src('demo/stylus/**/*.styl')
+        .pipe($.stylus({use: [nib()]}))
+        .pipe(gulp.dest('demo/css'))<% } else if (includeLess) { %>
+        var path = require('path');
+    return gulp.src('demo/less/**/*.less')
+        .pipe($.less({
+            paths: [ path.join(__dirname, 'less', 'includes') ]
+         }))
+        .pipe(gulp.dest('demo/css'))<% } else { %> return gulp.src('demo/css/**/*.css')<% } %>
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('demo/css'))
         .pipe($.rename({suffix: '.min'}))

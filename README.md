@@ -41,6 +41,59 @@ Yeoman has a heart of gold. He's a person with feelings and opinions, but he's v
 
 If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
 
+## 项目目录规范
+```
+site
+	src
+		page //模板文件目录
+		module //页面模块,增进页面结构
+		    base
+		    	/rest.css
+		    	/common.css
+		    	/grid.css
+			common
+				/global.js
+				/util.sj
+			header
+				/index.js
+				/index.css
+				/index.html
+			footer
+			nav
+			menu
+			...
+
+		widget // JS组件
+			dialog
+				1.0.0
+					src
+						/*.js
+						/*css
+					demo
+						/index.html
+					test
+					plugin (待定)
+				1.0.1
+	doc
+	dist
+		images
+			icon
+			_res
+			/sp.png
+		js
+			libs
+			/global.js
+		css
+			/base.css
+			/page.css
+			/page-proj.css
+		index.html
+		page.html
+	static
+		*.jpg
+		*.png
+	test
+```
 
 ## License
 
