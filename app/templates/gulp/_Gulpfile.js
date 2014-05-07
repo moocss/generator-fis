@@ -83,7 +83,7 @@ gulp.task('images', function () {
 
 // Clean
 gulp.task('clean', function () {
-    return gulp.src(['demo/**/*', 'dist'], {read: false}).pipe($.clean());
+    return gulp.src(['demo/**/*', '.tmp', 'dist'], {read: false}).pipe($.clean());
 });
 
 // Build
@@ -113,6 +113,23 @@ gulp.task('server', ['connect','styles'], function(){
     require('opn')('http://localhost:9000');
 });
 
+// Inject bower components
+gulp.task('wiredep', function () {
+    var wiredep = require('wiredep').stream;
+<% if (includeSass) { %>
+    gulp.src('demo/**/*.scss')
+        .pipe(wiredep({
+            directory: 'src/components'
+        }))
+        .pipe(gulp.dest('demo/css'));
+<% } %>
+    gulp.src('demo/*.html')
+        .pipe(wiredep({
+            directory: 'src/components'
+        }))
+        .pipe(gulp.dest('demo'));
+});
+
 // Watch
 gulp.task('watch', ['connect', 'server'], function (){
     var sr = $.livereload();
@@ -130,5 +147,6 @@ gulp.task('watch', ['connect', 'server'], function (){
     gulp.watch('demo/css/**/*.<%= includeStylus ? 'styl' : 'css' %>', ['styles']);
     gulp.watch('demo/js/**/*.js', ['scripts']);
     gulp.watch('demo/images/**/*', ['images']);
+    gulp.watch('bower.json', ['wiredep']);
 
 });

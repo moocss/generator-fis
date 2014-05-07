@@ -2,17 +2,28 @@
 用法：
     yo fis              初始化一个 Project
     yo fis:h            显示帮助
-    yo fis:h5           生成一个H5页面模板
-    yo fis:xt           生成一个HTML4页面模板
+    yo fis:h5           生成一个HTML5页面模板
+    yo fis:h4           生成一个HTML4页面模板
     yo fis:webapp       生成一个完整的网站模板
-    yo fis:mod          初始化一个模块单元
+    yo fis:module       初始化一个模块单元
     yo fis:page         生成一个Page
-    yo fis:components   创建标准的组件
+    yo fis:widget       创建标准的组件
+        Example:        yo fis:widget 1.0.0
 
 生成项目的默认Grunt命令：
     gulp                构建项目
+    gulp styles			css的检测、压缩和合并
+    gulp scripts        js的检测、压缩和合并
+    gulp html
+    gulp images			图片压缩和图片精灵
+    gulp clean			清除 tmp 和 dist 目录内容
+    gulp wiredep		Inject bower components
+    gulp build			处理html、css、js等
+    gulp watch			自动监听文件的改变和F5刷新
+    gulp publish        发布项目
 
 工具文档：https://github.com/moocss/generator-fis
 @author by moocss
+@email  moocss@gmail.com
 
 /*------------------------------------------------------*/

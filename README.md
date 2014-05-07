@@ -45,15 +45,16 @@ If you'd like to get to know Yeoman better and meet some of his friends, [Grunt]
 ```
 site
 	src
+	    components  //来自网络的bower_components
 		page //模板文件目录
-		module //页面模块,增进页面结构
+		module //页面模块,增进页面结构(模板组件,CSS组件)
 		    base
 		    	/rest.css
 		    	/common.css
 		    	/grid.css
 			common
 				/global.js
-				/util.sj
+				/util.js
 			header
 				/index.js
 				/index.css
@@ -74,21 +75,30 @@ site
 					test
 					plugin (待定)
 				1.0.1
+				1.0.2
+				...
 	doc
 	dist
-		images
-			icon
-			_res
-			/sp.png
-		js
-			libs
-			/global.js
-		css
-			/base.css
-			/page.css
-			/page-proj.css
-		index.html
-		page.html
+	    components
+		proj-name
+			1.0.0
+				images
+					icon
+					_res
+					/sp.png
+				js
+					libs
+					/global.js
+				css
+					/base.css
+					/page.css
+					/page-proj.css
+				index.html
+				page.html
+			1.0.1
+			1.0.2
+			...
+		...
 	static
 		*.jpg
 		*.png
