@@ -7,7 +7,7 @@ var $ = require('gulp-load-plugins')();
 
 // configurable paths
 var folders = {
-    app: 'app',
+    app: 'src',
     bliud: 'bliud',
     dist: 'dist',
     tmp: '.tmp'

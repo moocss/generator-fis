@@ -13,6 +13,11 @@ var FisGenerator = yeoman.generators.Base.extend({
 
         this.pkg = require('../package.json');
 
+        if (!this.options['skip-install-message']) {
+            //welcome message
+            this.log(FisLogo(this));
+        }
+
         this.on('end', function() {
             var howToInstall =
                 '\nAfter running '+chalk.yellow.bold('npm install & bower install')+' , inject your front end dependencies into' +
@@ -58,9 +63,6 @@ var FisGenerator = yeoman.generators.Base.extend({
     askFor: function() {
         var done = this.async();
 
-        //welcome messagef
-        this.log(FisLogo(this));
-
         var abcJSON = {};
         try {
             abcJSON = require(path.resolve(process.cwd(), 'abc.json'));
@@ -81,7 +83,6 @@ var FisGenerator = yeoman.generators.Base.extend({
         var folderName = path.basename(process.cwd());
 
         // your-mojo-name => YourMojoName
-
         function parseMojoName(name) {
             return name.replace(/\b(\w)|(-\w)/g, function(m) {
                 return m.toUpperCase().replace('-', '');
@@ -211,7 +212,7 @@ var FisGenerator = yeoman.generators.Base.extend({
                 done();
             }
 
-        }.bind(this))
+        }.bind(this));
     },
 
     app: function() {

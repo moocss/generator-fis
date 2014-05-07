@@ -1,4 +1,5 @@
 /**
  * @fileoverview <%= projectName %>
- * @author
+ * @author <%= author %> <<%= email %>>
+ * @version <%= version %>
  */

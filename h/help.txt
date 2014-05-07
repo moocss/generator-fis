@@ -12,14 +12,14 @@
 
 生成项目的默认Grunt命令：
     gulp                构建项目
-    gulp styles			css的检测、压缩和合并
+    gulp styles		css的检测、压缩和合并
     gulp scripts        js的检测、压缩和合并
     gulp html
-    gulp images			图片压缩和图片精灵
-    gulp clean			清除 tmp 和 dist 目录内容
-    gulp wiredep		Inject bower components
-    gulp build			处理html、css、js等
-    gulp watch			自动监听文件的改变和F5刷新
+    gulp images		图片压缩和图片精灵
+    gulp clean		清除 tmp 和 dist 目录内容
+    gulp wiredep	Inject bower components
+    gulp build		处理html、css、js等
+    gulp watch		自动监听文件的改变和F5刷新
     gulp publish        发布项目
 
 工具文档：https://github.com/moocss/generator-fis
