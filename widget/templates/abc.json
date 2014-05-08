@@ -1,0 +1,15 @@
+{
+    "name": "<%= reposName %>",
+    "comName":"<%= comName %>",
+    "version": "<%= version %>",
+    "desc": "描述一下你的组件！",
+    "tag":"<%= tag %>",
+    "githubName":"<%= githubName %>",
+    "author": {
+        "name": "<%= author %>",
+        "email": "<%= email %>",
+        "page": ""
+    },
+    "type": "widget",
+    "type-url": ""
+}

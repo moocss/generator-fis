@@ -16,7 +16,7 @@ var AppGenerator = yeoman.generators.Base.extend({
         }
 
         this.on('end', function() {
-            this.log(chalk.green('done!'));
+            this.log(chalk.green('\nDone!'));
         }.bind(this));
 
     },
@@ -29,7 +29,7 @@ var AppGenerator = yeoman.generators.Base.extend({
         try {
             abcJSON = require(path.resolve(process.cwd(), 'abc.json'));
         } catch (e) {
-            console.log('abc.json not found');
+            console.log('abc.json Not found!\n');
             try {
                 abcJSON = require(path.resolve(process.cwd(), '..', 'abc.json'));
             } catch (e) {
@@ -37,7 +37,7 @@ var AppGenerator = yeoman.generators.Base.extend({
                     abcJSON = require(path.resolve(process.cwd(), '../../', 'abc.json'));
                     pagesModulesWidgets = path.basename(process.cwd());
                 } catch (e) {
-                    console.log('do nothing!');
+                    console.log('Do nothing!');
                     process.exit();
                 }
             }
@@ -88,6 +88,7 @@ var AppGenerator = yeoman.generators.Base.extend({
             var _tname = props.mojoName;
 
             this.mojoName = this.pagesModulesWidgets ? this.pagesModulesWidgets + '/' + props.mojoName : props.mojoName;// your-mod-name
+
             this.modName = parseMojoName(_tname).replace(/^(~|-)/,'');//YourModName
 
             this.packageName = abcJSON.name; // project-name
@@ -106,10 +107,10 @@ var AppGenerator = yeoman.generators.Base.extend({
     },
     files: function() {
 
-        // 如果有mods/widgets/pages，就把前缀替换回来
+        // 如果有page/module/widget/，就把前缀替换回来
         var mojoName = this.pagesModulesWidgets ? this.mojoName.replace(/^([^\/]+)\//i,'') : this.mojoName;
         this.mkdir(mojoName);
-        this.mkdir(mojoName+'/img');
+        this.mkdir(mojoName+'/images');
         this.template('index.html',mojoName + '/index.html');
         this.template('index.js',mojoName+'/index.js');
         this.template('index.stylus',mojoName+'/index.'+this.cssCompile);

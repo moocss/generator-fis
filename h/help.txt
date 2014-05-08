@@ -10,7 +10,7 @@
     yo fis:widget       创建标准的组件
         Example:        yo fis:widget 1.0.0
 
-生成项目的默认Grunt命令：
+生成项目的默认Gulp命令：
     gulp                构建项目
     gulp styles		css的检测、压缩和合并
     gulp scripts        js的检测、压缩和合并

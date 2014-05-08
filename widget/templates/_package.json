@@ -1,0 +1,30 @@
+{
+    "name": "<%= reposName %>",
+    "version": "<%= version %>",
+    "description": "",
+    "main": "Gulpfile.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "Gulp",
+        "JavaScript"
+    ],
+    "dependencies": {},
+    "devDependencies": {
+        "gulp": "~3.6.1",
+        "gulp-load-plugins": "~0.5.0",
+        "gulp-watch": "~0.6.2",
+        "gulp-jshint": "~1.5.5",
+        "gulp-util": "~2.2.14",
+        "gulp-rename": "~1.2.0",
+        "gulp-cache": "~0.1.3",
+        "gulp-clean": "~0.2.4",
+        "gulp-size": "~0.3.0"
+    },
+    "engines": {
+        "node": ">=0.10.0"
+    },
+    "author": ["<%= author %> <<%= email %>>"],
+    "license": "MIT"
+}

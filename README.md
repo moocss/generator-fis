@@ -28,12 +28,70 @@ To install generator-fis from npm, run:
 ```
 $ npm install -g generator-fis
 ```
-
+Make a new directory and `cd` into it:
+```
+mkdir my-new-project && cd $_
+```
 Finally, initiate the generator:
 
 ```
 $ yo fis
 ```
+
+Available generators:
+
+- fis              初始化一个 Project
+- fis:h            显示帮助
+- fis:h5           生成一个HTML5页面模板
+- fis:h4           生成一个HTML4页面模板
+- fis:webapp       生成一个完整的网站模板
+- fis:module       初始化一个模块单元
+- fis:page         生成一个Page
+- fis:widget       创建标准的组件
+        Example:   fis:widget 1.0.0
+
+### Typical workflow
+
+```
+yo fis #初始化一个 Project
+yo fis:page     生成一个Page
+gulp            构建项目
+gulp styles		css的检测、压缩和合并
+gulp scripts    js的检测、压缩和合并
+gulp html
+gulp images		图片压缩和图片精灵
+gulp clean		清除 tmp 和 dist 目录内容
+gulp wiredep	Inject bower components
+gulp build		处理html、css、js等
+gulp watch		自动监听文件的改变和F5刷新
+gulp publish    发布项目
+
+```
+
+### Options
+
+* `--appPath`
+
+  Generate scaffold into a custom directory.
+
+* `--requirejs`
+
+  Generate scaffolds using RequireJS (AMD) Loader. By default check if project uses RequireJS.
+
+* `--skip-install`
+
+  Skips the automatic execution of `bower` and `npm` after
+  scaffolding has finished.
+
+* `--skip-install-message`
+
+   welcome message
+
+* `--test-framework=[framework]`
+
+  Defaults to `mocha`. Can be switched for
+  another supported testing framework like `jasmine`.
+
 
 ### Getting To Know Yeoman
 

@@ -150,3 +150,11 @@ gulp.task('watch', ['connect', 'server'], function (){
     gulp.watch('bower.json', ['wiredep']);
 
 });
+
+// zip
+gulp.task('zip', function() {
+    gulp.src('src/**/*')
+        .pipe($.zip('<%= projectName %>-<%= today %>.zip'))
+        .pipe(gulp.dest('dist'))
+        .pipe($.size());
+});

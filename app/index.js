@@ -55,6 +55,12 @@ var FisGenerator = yeoman.generators.Base.extend({
 
                     console.log(chalk.green('\nnpm was installed successful. \n'));
 
+                    if (this.useBuild === 'gulp') {
+                        this.spawnCommand('gulp', ['build']);
+                    }else{
+                        this.spawnCommand('grunt', ['build']);
+                    }
+
                 }.bind(this)
             });
         });
@@ -78,8 +84,6 @@ var FisGenerator = yeoman.generators.Base.extend({
             abcJSON.name = 'tmp';
         }
 
-        // have Yeoman greet the user
-        // this.log(this.yeoman);
         var folderName = path.basename(process.cwd());
 
         // your-mojo-name => YourMojoName
@@ -155,7 +159,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             }, {
                 name: 'version',
                 message: chalk.green('(9/10)', chalk.white('Version')),
-                default: '0.1.0',
+                default: '1.0.0',
                 warning: ''
             }
         ];
