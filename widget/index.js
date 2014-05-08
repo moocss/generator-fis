@@ -15,11 +15,6 @@ var AppGenerator = yeoman.generators.Base.extend({
         //库地址
         this.reposName = path.basename(process.cwd());
 
-        if (!(this.reposName === 'widget')) {
-            this.log('请切换到此 '+ chalk.red('widget') +' 目录下进行创建活动...');
-            
-        }
-
         if (!this.options['skip-install-message']) {
             //welcome message
             this.log(FisLogo(this));
@@ -54,44 +49,51 @@ var AppGenerator = yeoman.generators.Base.extend({
             author.email = abcAuthor.email || '';
         }
 
-        var prompts = [{
-            name: 'comName',
-            message: chalk.white('Name of Component?'),
-            default: this.abcJSON.name,
-            validate: function(val) {
-                return val.length > 0 ? true : '你必须给组件取个名称！'
+        var prompts = [
+            {
+                name: 'comName',
+                message: chalk.white('Name of Component?'),
+                default: this.abcJSON.comName,
+                validate: function(val) {
+                    return val.length > 0 ? true : '你必须给组件取个名称！'
+                },
+                warning: ''
             },
-            warning: ''
-        }, {
-            name: 'author',
-            message: 'author of component',
-            default: author.name,
-            validate: function(val) {
-                return val.length > 0 ? true : '你必须输入一个昵称！'
+            {
+                name: 'version',
+                message: 'version?',
+                default: '1.0.0',
+                warning: ''
             },
-            warning: ''
-        }, {
-            name: 'email',
-            message: 'email of author',
-            default: author.email,
-            validate: function(val) {
-                return validator.isEmail(val) ? true : '你必须输入一个邮箱地址！';
+            {
+                name: 'author',
+                message: 'author of component',
+                default: author.name,
+                validate: function(val) {
+                    return val.length > 0 ? true : '你必须输入一个昵称！'
+                },
+                warning: ''
             },
-            warning: ''
-        }, {
-            name: 'tag',
-            message: 'tag of component',
-            warning: ''
-        }, {
-            name: 'githubName',
-            message: 'user name of github',
-            warning: ''
-        }, {
-            name: 'version',
-            message: 'version?',
-            default: '1.0.0',
-            warning: ''
-        }];
+            {
+                name: 'email',
+                message: 'email of author',
+                default: author.email,
+                validate: function(val) {
+                    return validator.isEmail(val) ? true : '你必须输入一个邮箱地址！';
+                },
+                warning: ''
+            },
+            {
+                name: 'tag',
+                message: 'tag of component',
+                warning: ''
+            },
+            {
+                name: 'githubName',
+                message: 'user name of github',
+                warning: ''
+            }
+        ];
 
         this.prompt(prompts, function(props) {
             //组件名称
@@ -108,24 +110,29 @@ var AppGenerator = yeoman.generators.Base.extend({
     },
     app: function() {
         this.log(chalk.green(' ✓', chalk.white('------------>>> 开始 生成组件模板 >>>--------------')));
-        if (this.reposName === 'widget') {
-            this.mkdir(this.comName);
-            var rootDir = this.comName + '/' + this.version;
-            this.mkdir(rootDir);
-            var fold = ['src', 'dist', 'demo', 'plugin', 'test', 'assets'];
+        if (this.abcJSON.comName === this.comName ) {
+            this.mkdir(this.version);
+            var fold = ['src', 'dist', 'demo', 'test', 'assets'];
             for (var i = 0; i < fold.length; i++) {
-                this.mkdir(path.join(rootDir, fold[i]));
+                this.mkdir(path.join(this.version, fold[i]));
+            }
+        } else {
+            this.mkdir(this.comName);
+            process.chdir(this.comName);
+            this.mkdir(this.version);
+            var fold = ['src', 'dist', 'demo', 'test', 'assets'];
+            for (var i = 0; i < fold.length; i++) {
+                this.mkdir(path.join(this.version, fold[i]));
             }
         }
 
     },
     files: function() {
-        if (this.reposName === 'widget') {
-            this.template('_Gulpfile.js', this.comName + '/Gulpfile.js');
-            this.template('_package.json', this.comName + '/package.json');
-            this.template('_readme.md', this.comName + '/README.md');
-            this.template('abc.json', this.comName + '/abc.json');
-        }
+        this.template('_Gulpfile.js', 'Gulpfile.js');
+        this.template('_package.json', 'package.json');
+        this.template('_readme.md', 'README.md');
+        this.template('abc.json', 'abc.json');
+        this.template('index.js', this.version + '/src/index.js');
     }
 });
 
