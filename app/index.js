@@ -20,7 +20,7 @@ var FisGenerator = yeoman.generators.Base.extend({
 
         this.on('end', function() {
             var howToInstall =
-                '\nAfter running '+chalk.yellow.bold('npm install & bower install')+' , inject your front end dependencies into' +
+                '\nAfter running ' + chalk.yellow.bold('npm install & bower install') + ' , inject your front end dependencies into' +
                 '\nyour HTML by running:' +
                 '\n' +
                 chalk.yellow.bold('\n  gulp wiredep');
@@ -57,7 +57,7 @@ var FisGenerator = yeoman.generators.Base.extend({
 
                     if (this.useBuild === 'gulp') {
                         this.spawnCommand('gulp', ['build']);
-                    }else{
+                    } else {
                         this.spawnCommand('grunt', ['build']);
                     }
 
@@ -97,72 +97,95 @@ var FisGenerator = yeoman.generators.Base.extend({
         this.log(chalk.magenta('You\'re using the fantastic Fis generator - Greate Webapp.'));
 
         var prompts = [{
-                name: 'projectName',
-                message: chalk.green('(1/10)', chalk.white('Name of Project?')),
-                default: folderName,
-                warning: ''
-            }, {
-                name: 'srcDir',
-                message: chalk.green('(2/10)', chalk.white('Create', chalk.red.bold('"src"'), 'directory?')),
-                default: 'Y/n',
-                warning: ''
-            }, {
-                name: 'author',
-                message: chalk.green('(3/10)', chalk.white('Author Name')),
-                default: abcJSON.author.name,
-                validate: function(val) {
-                    return val.length > 0 ? true : '你必须输入一个昵称！'
-                },
-                warning: ''
-            }, {
-                name: 'email',
-                message: chalk.green('(4/10)', chalk.white('Author Email')),
-                default: abcJSON.author.email,
-                validate: function(val) {
-                    return validator.isEmail(val) ? true : '你必须输入一个邮箱地址！';
-                },
-                warning: ''
-            }, {
-                name: 'groupName',
-                message: chalk.green('(5/10)', chalk.white('Group Name')),
-                default: 'fued',
-                warning: ''
-            }, {
-                name: 'useBuild',
-                message: chalk.green('(6/10)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
-                default: 'Y/n',
-                warning: ''
-            }, {
-                type: 'list',
-                name: 'cssCompile',
-                message: chalk.green('(7/10)', chalk.white('请你选择CSS预编译语言?')),
-                choices: [{
-                    name: 'CSS',
-                    value: 'includeCSS'
-                }, {
-                    name: 'Sass',
-                    value: 'includeSass'
-                }, {
-                    name: 'Stylus',
-                    value: 'includeStylus'
-                }, {
-                    name: 'Less',
-                    value: 'includeLess'
-                }],
-                default: 2
+            name: 'projectName',
+            message: chalk.green('(1/10)', chalk.white('Name of Project?')),
+            default: folderName,
+            warning: ''
+        }, {
+            name: 'srcDir',
+            message: chalk.green('(2/10)', chalk.white('Create', chalk.red.bold('"src"'), 'directory?')),
+            default: 'Y/n',
+            warning: ''
+        }, {
+            name: 'author',
+            message: chalk.green('(3/10)', chalk.white('Author Name')),
+            default: abcJSON.author.name,
+            validate: function(val) {
+                return val.length > 0 ? true : '你必须输入一个昵称！'
             },
-            {
-                name: 'jquery',
-                message: chalk.green('(8/10)', chalk.white('你要使用jQuery吗?')),
-                default: 'Y/n',
-                warning: ''
+            warning: ''
+        }, {
+            name: 'email',
+            message: chalk.green('(4/10)', chalk.white('Author Email')),
+            default: abcJSON.author.email,
+            validate: function(val) {
+                return validator.isEmail(val) ? true : '你必须输入一个邮箱地址！';
+            },
+            warning: ''
+        }, {
+            name: 'groupName',
+            message: chalk.green('(5/10)', chalk.white('Group Name')),
+            default: 'fued',
+            warning: ''
+        }, {
+            name: 'useBuild',
+            message: chalk.green('(6/10)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
+            default: 'Y/n',
+            warning: ''
+        }, {
+            type: 'list',
+            name: 'cssCompile',
+            message: chalk.green('(7/10)', chalk.white('请你选择CSS预编译语言?')),
+            choices: [{
+                name: 'CSS',
+                value: 'includeCSS'
             }, {
-                name: 'version',
-                message: chalk.green('(9/10)', chalk.white('Version')),
-                default: '1.0.0',
-                warning: ''
+                name: 'Sass',
+                value: 'includeSass'
+            }, {
+                name: 'Stylus',
+                value: 'includeStylus'
+            }, {
+                name: 'Less',
+                value: 'includeLess'
+            }],
+            default: 2
+        }, {
+            name: 'jquery',
+            message: chalk.green('(8/10)', chalk.white('你要使用jQuery吗?')),
+            default: 'Y/n',
+            warning: ''
+        }, {
+            name: 'version',
+            message: chalk.green('(9/10)', chalk.white('Version')),
+            default: '1.0.0',
+            warning: ''
+        }];
+
+        /**
+         * 日期格式化
+         * @param  {Date} date new Date();
+         * @param  {String} fmt  日期格式：yyyy-MM-dd hh:mm:ss
+         * @return {String}      yyyy-MM-dd hh:mm:ss
+         */
+        function formatDate(date, fmt) { //author: meizz
+            var o = {
+                "M+": date.getMonth() + 1, //月份
+                "d+": date.getDate(), //日
+                "h+": date.getHours(), //小时
+                "m+": date.getMinutes(), //分
+                "s+": date.getSeconds(), //秒
+                "q+": Math.floor((date.getMonth() + 3) / 3)
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                }
             }
-        ];
+            return fmt;
+        }
 
         this.prompt(prompts, function(props) {
 
@@ -196,8 +219,7 @@ var FisGenerator = yeoman.generators.Base.extend({
                     break;
             }
 
-            var today = new Date();
-            this.today = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + (today.getDate())).slice(-2);
+            this.today = formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss');
 
             if (this.srcDir) {
                 this.prompt([{
@@ -250,7 +272,6 @@ var FisGenerator = yeoman.generators.Base.extend({
 
     },
 
-
     git: function() {
         this.log(chalk.green('\n ✓', chalk.white('------------>>> 开始 GIT >>>--------------')));
         this.copy('git.attributes', '.gitattributes');
@@ -260,6 +281,7 @@ var FisGenerator = yeoman.generators.Base.extend({
     useBuild: function() {
         if (this.useBuild === 'gulp') {
             this.log(chalk.green('\n ✓', chalk.white('------------>>> 开始 Gulp >>>--------------')));
+            this.directory('gulp/src', 'gulp');
             this.template('gulp/_Gulpfile.js', 'Gulpfile.js');
             this.template('gulp/_bower.json', 'bower.json');
             this.copy('gulp/bowerrc', '.bowerrc');
@@ -267,6 +289,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.template('gulp/_readme.md', 'README.md');
         } else {
             this.log(chalk.green('\n ✓', chalk.white('------------>>> 开始 Grunt >>>--------------')));
+            this.directory('grunt/src', 'grunt');
             this.template('grunt/_Gruntfile.js', 'Gruntfile.js');
             this.template('grunt/_bower.json', 'bower.json');
             this.copy('grunt/bowerrc', '.bowerrc');
