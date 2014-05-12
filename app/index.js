@@ -267,6 +267,7 @@ var FisGenerator = yeoman.generators.Base.extend({
         }
 
         this.mkdir('dist');
+        this.mkdir('static');
         this.mkdir('test');
         this.mkdir('doc');
         this.template('abc.json');
