@@ -35,31 +35,32 @@ var FisGenerator = yeoman.generators.Base.extend({
                 skipInstall: this.options['skip-install'],
                 callback: function() {
                     //console.log('Everything is ready!');
-                    var bowerJson = JSON.parse(fs.readFileSync('./bower.json'));
-                    if (this.jquery) {
-                        // wire Bower packages to jQuery
-                        wiredep({
-                            bowerJson: bowerJson,
-                            directory: 'src/components',
-                            src: 'demo/**/*.html'
-                        });
-                    }
-                    /*if (this.includeSass) {
-                        // wire Bower packages to .scss
-                        wiredep({
-                            bowerJson: bowerJson,
-                            directory: 'src/components',
-                            src: ''
-                        });
-                    }*/
+
+	                var bowerJson = JSON.parse(fs.readFileSync('./bower.json'));
+	                if (this.jquery) {
+	                    // wire Bower packages to jQuery
+	                    wiredep({
+	                        bowerJson: bowerJson,
+	                        directory: this.srcDir ? 'src/components' : 'bower_components',
+	                        src: 'app/**/*.html'
+	                    });
+	                }
+	                /*if (this.includeSass) {
+	                    // wire Bower packages to .scss
+	                    wiredep({
+	                        bowerJson: bowerJson,
+	                        directory: 'src/components',
+	                        src: ''
+	                    });
+	                }*/
 
                     console.log(chalk.green('\nnpm was installed successful. \n'));
 
-                    if (this.useBuild === 'gulp') {
+                    /*if (this.useBuild === 'gulp') {
                         this.spawnCommand('gulp', ['build']);
                     } else {
                         this.spawnCommand('grunt', ['build']);
-                    }
+                    }*/
 
                 }.bind(this)
             });
@@ -196,6 +197,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.groupName = props.groupName;
             this.version = props.version;
             this.srcDir = (/^y/i).test(props.srcDir);
+            this.root = path.resolve('./');
             this.useBuild = ((/^y/i).test(props.useBuild)) ? 'gulp' : 'grunt';
             this.jquery = (/^y/i).test(props.jquery);
 
@@ -258,17 +260,17 @@ var FisGenerator = yeoman.generators.Base.extend({
                 } else {
                     this.mkdir('src/page/less');
                 }*/
+
+                // test
+                this.directory('app', 'src/page');
             }
         }
-
-        //手工测试demo
-        //this.directory('demo', 'demo');
 
         this.mkdir('dist');
         this.mkdir('test');
         this.mkdir('doc');
         this.template('abc.json');
-        this.log('Directories initialization done!');
+        //this.log('Directories initialization done!');
 
     },
 
@@ -284,7 +286,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.directory('gulp/src', 'gulp');
             this.template('gulp/_Gulpfile.js', 'Gulpfile.js');
             this.template('gulp/_bower.json', 'bower.json');
-            this.copy('gulp/bowerrc', '.bowerrc');
+            this.template('gulp/bowerrc', '.bowerrc');
             this.template('gulp/_package.json', 'package.json');
             this.template('gulp/_readme.md', 'README.md');
         } else {
@@ -292,20 +294,11 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.directory('grunt/src', 'grunt');
             this.template('grunt/_Gruntfile.js', 'Gruntfile.js');
             this.template('grunt/_bower.json', 'bower.json');
-            this.copy('grunt/bowerrc', '.bowerrc');
+            this.template('grunt/bowerrc', '.bowerrc');
             this.template('grunt/_package.json', 'package.json');
             this.template('grunt/_readme.md', 'README.md');
         }
     },
-    /*
-    sass: function() {
-        this.log(chalk.green('\n ✓', chalk.white('------------>>> 开始Sass >>>--------------')));
-
-    },
-
-    stylus: function() {
-        this.log(chalk.green('\n ✓', chalk.white('------------>>> 开始Stylus >>>------------')));
-    },*/
 
     jshint: function() {
         this.log(chalk.green('\n ✓', chalk.white('------------>>> 开始 jshint >>>------------')));

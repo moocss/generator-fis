@@ -1,3 +1,6 @@
+var gulp = require('gulp');
+var $ = require('gulp-load-plugins')();
+
 /**
  * [description]
  * @return {[type]} [description]
@@ -9,9 +12,8 @@ gulp.task('watch', ['connect', 'server'], function() {
     var reload = function(file) {
         sr.changed(file.path);
     };
-
-    gulp.watch(folders.dist + '/**/*').on('change', reload);
-
-    gulp.watch(app + '/**/*', ['scripts', 'styles', 'images']);
-
+    gulp.watch('dist/**/*').on('change', reload);
+    gulp.watch('src/**/*', ['scripts', 'styles', 'images']);
+    gulp.watch('src/**/*', ['compass']);
+    gulp.watch('bower.json', ['wiredep']);
 });
