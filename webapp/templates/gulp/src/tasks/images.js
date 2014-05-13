@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('images', function () {
-    return gulp.src(['static/**/*.png','static/**/*.jpg','static/**/*.gif','static/**/*.jpeg'])
+    return gulp.src(['app/img/**/*.png','app/img/**/*.jpg','app/img/**/*.gif','app/img/**/*.jpeg'])
     	.pipe($.changed('dist/img/**/*')) // Ignore unchanged files
         .pipe($.cache($.imagemin({
             optimizationLevel: 3,

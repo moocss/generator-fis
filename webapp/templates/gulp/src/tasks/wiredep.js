@@ -4,17 +4,17 @@ var gulp = require('gulp');
 // Inject bower components
 gulp.task('wiredep', function () {
 <% if (includeSass) { %>
-    gulp.src('src/**/*.scss')<% } else if (includeStylus) { %>
-    gulp.src('src/**/*.styl')<% } else if (includeLess) { %>
-    gulp.src('src/**/*.less')<% } %>
+    gulp.src('app/**/*.scss')<% } else if (includeStylus) { %>
+    gulp.src('app/**/*.styl')<% } else if (includeLess) { %>
+    gulp.src('app/**/*.less')<% } %>
     .pipe(wiredep({
-        directory: 'src/components'
+        directory: 'app/components'
     }))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('app/css'));
 
-    gulp.src('src/*.html')
+    gulp.src('app/*.html')
         .pipe(wiredep({
-            directory: 'src/components'
+            directory: 'app/components'
         }))
-        .pipe(gulp.dest('src'));
+        .pipe(gulp.dest('app'));
 });

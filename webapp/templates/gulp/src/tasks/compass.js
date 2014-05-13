@@ -3,7 +3,7 @@ var $ = require('gulp-load-plugins')();
 var handleErrors = require('../utilus/handleErrors');
 
 gulp.task('compass', function() {
-	return gulp.src('src/sass/**/*.scss')
+	return gulp.src('app/**/*.scss')
 		.pipe($.compass({
 			config_file: 'compass.rb',
 			css: 'build',

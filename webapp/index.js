@@ -20,10 +20,7 @@ var FisGenerator = yeoman.generators.Base.extend({
 
         this.on('end', function() {
             var howToInstall =
-                '\nAfter running ' + chalk.yellow.bold('npm install & bower install') + ' , inject your front end dependencies into' +
-                '\nyour HTML by running:' +
-                '\n' +
-                chalk.yellow.bold('\n  gulp wiredep');
+                '\nAfter running ' + chalk.yellow.bold('npm install & bower install');
 
             if (this.options['skip-install']) {
                 console.log(howToInstall);
@@ -51,7 +48,6 @@ var FisGenerator = yeoman.generators.Base.extend({
         } catch (e) {}
 
         //this.log(path.resolve(process.cwd(), 'abc.json'));
-        //this.log(abcJSON.author.name);
 
         if (!abcJSON.author) {
             abcJSON.author = {
@@ -200,9 +196,19 @@ var FisGenerator = yeoman.generators.Base.extend({
         this.mkdir('app');
         this.mkdir('app/js');
         this.mkdir('app/css');
+    if (this.includeSass) {
+        this.directory('app/sass', 'app/sass');
+    } else if (this.includeStylus) {
+        this.directory('app/stylus', 'app/stylus');
+    } else if (this.includeLess) {
+        this.directory('app/less', 'app/less');
+    }else {
+        this.directory('app/css', 'app/css');
+    }
         this.mkdir('app/img');
         this.mkdir('dist');
         this.mkdir('test');
+        this.template('app/index.html');
         this.template('abc.json');
         //this.log('Directories initialization done!');
 

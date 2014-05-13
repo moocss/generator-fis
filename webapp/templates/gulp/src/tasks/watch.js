@@ -12,8 +12,15 @@ gulp.task('watch', ['connect', 'server'], function() {
     var reload = function(file) {
         sr.changed(file.path);
     };
-    gulp.watch('dist/**/*').on('change', reload);
-    gulp.watch('src/**/*', ['scripts', 'styles', 'images']);
-    gulp.watch('src/**/*', ['compass']);
-    gulp.watch('bower.json', ['wiredep']);
+    gulp.watch([
+        'app/*.html',
+        '.tmp/css/**/*.css',
+        'app/js/**/*.js',
+        'app/img/**/*'
+    ]).on('change', reload);
+
+    gulp.watch('app/css/**/*', ['styles']);
+    gulp.watch('app/js/**/*.js', ['scripts']);
+    gulp.watch('app/img/**/*', ['images']);
+
 });
