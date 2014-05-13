@@ -44,7 +44,6 @@ Available generators:
 - fis:h            显示帮助
 - fis:h5           生成一个HTML5页面模板
 - fis:h4           生成一个HTML4页面模板
-- fis:webapp       生成一个完整的网站模板
 - fis:module       初始化一个模块单元
 - fis:page         生成一个Page
 - fis:widget       创建标准的组件
@@ -110,14 +109,17 @@ site
 		    	/rest.css
 		    	/common.css
 		    	/grid.css
-			common
 				/global.js
+				/base.css
 				/util.js
 			header
 				/index.js
 				/index.css
 				/index.html
 			footer
+			content
+			sidebar
+			main-content
 			nav
 			menu
 			...

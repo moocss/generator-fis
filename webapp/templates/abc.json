@@ -1,0 +1,19 @@
+{
+    "name": "<%= packageName %>",
+    "desc": "描述一下你的项目！",
+    "type": "fis",
+    "group": "<%= groupName %>",
+    "port": "9000",
+    "root": "<%= root %>",
+    "useBuild": "<%= useBuild %>",
+    "cssCompile": "<%= cssCompile %>",
+    "version": "<%= version %>",
+    "author": {
+        "name": "<%= author %>",
+        "email": "<%= email %>"
+    },
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/<%= groupName %>/<%= packageName %>"
+    }
+}

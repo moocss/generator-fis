@@ -34,33 +34,8 @@ var FisGenerator = yeoman.generators.Base.extend({
                 skipMessage: this.options['skip-install-message'],
                 skipInstall: this.options['skip-install'],
                 callback: function() {
-                    //console.log('Everything is ready!');
-
-	                var bowerJson = JSON.parse(fs.readFileSync('./bower.json'));
-	                if (this.jquery) {
-	                    // wire Bower packages to jQuery
-	                    wiredep({
-	                        bowerJson: bowerJson,
-	                        directory: this.srcDir ? 'src/components' : 'bower_components',
-	                        src: 'app/**/*.html'
-	                    });
-	                }
-	                /*if (this.includeSass) {
-	                    // wire Bower packages to .scss
-	                    wiredep({
-	                        bowerJson: bowerJson,
-	                        directory: 'src/components',
-	                        src: ''
-	                    });
-	                }*/
 
                     console.log(chalk.green('\nnpm was installed successful. \n'));
-
-                    /*if (this.useBuild === 'gulp') {
-                        this.spawnCommand('gulp', ['build']);
-                    } else {
-                        this.spawnCommand('grunt', ['build']);
-                    }*/
 
                 }.bind(this)
             });
@@ -75,12 +50,16 @@ var FisGenerator = yeoman.generators.Base.extend({
             abcJSON = require(path.resolve(process.cwd(), 'abc.json'));
         } catch (e) {}
 
+        //this.log(path.resolve(process.cwd(), 'abc.json'));
+        //this.log(abcJSON.author.name);
+
         if (!abcJSON.author) {
             abcJSON.author = {
                 name: '',
                 email: ''
             }
         }
+
         if (!abcJSON.name) {
             abcJSON.name = 'tmp';
         }
@@ -99,17 +78,12 @@ var FisGenerator = yeoman.generators.Base.extend({
 
         var prompts = [{
             name: 'projectName',
-            message: chalk.green('(1/10)', chalk.white('Name of Project?')),
+            message: chalk.green('(1/7)', chalk.white('Name of Project?')),
             default: folderName,
             warning: ''
         }, {
-            name: 'srcDir',
-            message: chalk.green('(2/10)', chalk.white('Create', chalk.red.bold('"src"'), 'directory?')),
-            default: 'Y/n',
-            warning: ''
-        }, {
             name: 'author',
-            message: chalk.green('(3/10)', chalk.white('Author Name')),
+            message: chalk.green('(2/7)', chalk.white('Author Name')),
             default: abcJSON.author.name,
             validate: function(val) {
                 return val.length > 0 ? true : '你必须输入一个昵称！'
@@ -117,7 +91,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             warning: ''
         }, {
             name: 'email',
-            message: chalk.green('(4/10)', chalk.white('Author Email')),
+            message: chalk.green('(3/7)', chalk.white('Author Email')),
             default: abcJSON.author.email,
             validate: function(val) {
                 return validator.isEmail(val) ? true : '你必须输入一个邮箱地址！';
@@ -125,18 +99,18 @@ var FisGenerator = yeoman.generators.Base.extend({
             warning: ''
         }, {
             name: 'groupName',
-            message: chalk.green('(5/10)', chalk.white('Group Name')),
+            message: chalk.green('(4/7)', chalk.white('Group Name')),
             default: 'fued',
             warning: ''
         }, {
             name: 'useBuild',
-            message: chalk.green('(6/10)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
+            message: chalk.green('(5/7)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
             default: 'Y/n',
             warning: ''
         }, {
             type: 'list',
             name: 'cssCompile',
-            message: chalk.green('(7/10)', chalk.white('请你选择CSS预编译语言?')),
+            message: chalk.green('(6/7)', chalk.white('请你选择CSS预编译语言?')),
             choices: [{
                 name: 'CSS',
                 value: 'includeCSS'
@@ -151,14 +125,9 @@ var FisGenerator = yeoman.generators.Base.extend({
                 value: 'includeLess'
             }],
             default: 2
-        }, {
-            name: 'jquery',
-            message: chalk.green('(8/10)', chalk.white('你要使用jQuery吗?')),
-            default: 'Y/n',
-            warning: ''
-        }, {
+        },  {
             name: 'version',
-            message: chalk.green('(9/10)', chalk.white('Version')),
+            message: chalk.green('(7/7)', chalk.white('Version')),
             default: '1.0.0',
             warning: ''
         }];
@@ -196,10 +165,8 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.email = props.email;
             this.groupName = props.groupName;
             this.version = props.version;
-            this.srcDir = (/^y/i).test(props.srcDir);
             this.root = path.resolve('./');
             this.useBuild = ((/^y/i).test(props.useBuild)) ? 'gulp' : 'grunt';
-            this.jquery = (/^y/i).test(props.jquery);
 
             var cssCompile = this.cssCompile = props.cssCompile;
 
@@ -223,62 +190,19 @@ var FisGenerator = yeoman.generators.Base.extend({
 
             this.today = formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss');
 
-            if (this.srcDir) {
-                this.prompt([{
-                    name: 'pagesModulesWidgets',
-                    message: chalk.green('(10/10)', chalk.white('Create', chalk.red.bold('"src/page[module|widget]"'), 'directory?')),
-                    default: 'Y/n',
-                    warning: ''
-                }], function(props) {
-
-                    this.pagesModulesWidgets = (/^y/i).test(props.pagesModulesWidgets);
-
-                    done();
-
-                }.bind(this));
-            } else {
-                done();
-            }
+            done();
 
         }.bind(this));
     },
 
     app: function() {
         this.log(chalk.green(' ✓', chalk.white('------------>>> 开始 App >>>--------------')));
-        var that = this;
-        if (this.srcDir) {
-            this.mkdir('src');
-            if (this.pagesModulesWidgets) {
-                this.mkdir('src/components');
-                this.mkdir('src/page');
-                    this.template('app/index.html', 'src/page/index.html');
-                this.mkdir('src/module');
-                    this.mkdir('src/module/base');
-                    if (this.includeSass) {
-                        this.directory('app/sass', 'src/module/base/');
-                    } else if (this.includeStylus) {
-                        this.directory('app/stylus', 'src/module/base/');
-                    } else if (this.includeLess) {
-                        this.directory('app/less', 'src/module/base/');
-                    }else {
-                        this.directory('app/css', 'src/module/base/');
-                    }
-                    this.mkdir('src/module/header');
-                    this.mkdir('src/module/content');
-                    this.mkdir('src/module/footer');
-                    this.mkdir('src/module/mod');
-                    this.mkdir('src/module/box');
-                    this.mkdir('src/module/list');
-                    this.mkdir('src/module/menu');
-                    this.mkdir('src/module/tabs');
-                this.mkdir('src/widget');
-            }
-        }
-
+        this.mkdir('app');
+        this.mkdir('app/js');
+        this.mkdir('app/css');
+        this.mkdir('app/img');
         this.mkdir('dist');
-        this.mkdir('static');
         this.mkdir('test');
-        this.mkdir('doc');
         this.template('abc.json');
         //this.log('Directories initialization done!');
 
@@ -295,16 +219,12 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.log(chalk.green('\n ✓', chalk.white('------------>>> 开始 Gulp >>>--------------')));
             this.directory('gulp/src', 'gulp');
             this.template('gulp/_Gulpfile.js', 'Gulpfile.js');
-            this.template('gulp/_bower.json', 'bower.json');
-            this.template('gulp/bowerrc', '.bowerrc');
             this.template('gulp/_package.json', 'package.json');
             this.template('gulp/_readme.md', 'README.md');
         } else {
             this.log(chalk.green('\n ✓', chalk.white('------------>>> 开始 Grunt >>>--------------')));
             this.directory('grunt/src', 'grunt');
             this.template('grunt/_Gruntfile.js', 'Gruntfile.js');
-            this.template('grunt/_bower.json', 'bower.json');
-            this.template('grunt/bowerrc', '.bowerrc');
             this.template('grunt/_package.json', 'package.json');
             this.template('grunt/_readme.md', 'README.md');
         }

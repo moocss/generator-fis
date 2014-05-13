@@ -105,12 +105,13 @@ var AppGenerator = yeoman.generators.Base.extend({
         }.bind(this));
 
     },
+
     files: function() {
 
         // 如果有page/module/widget/，就把前缀替换回来
         var mojoName = this.pagesModulesWidgets ? this.mojoName.replace(/^([^\/]+)\//i,'') : this.mojoName;
         this.mkdir(mojoName);
-        this.mkdir(mojoName+'/images');
+        this.mkdir(mojoName+'/img');
         this.template('index.html',mojoName + '/index.html');
         this.template('index.js',mojoName+'/index.js');
         this.template('index.stylus',mojoName+'/index.'+this.cssCompile);
