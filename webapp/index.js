@@ -161,7 +161,6 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.email = props.email;
             this.groupName = props.groupName;
             this.version = props.version;
-            this.root = path.resolve('./');
             this.useBuild = ((/^y/i).test(props.useBuild)) ? 'gulp' : 'grunt';
 
             var cssCompile = this.cssCompile = props.cssCompile;
@@ -195,7 +194,6 @@ var FisGenerator = yeoman.generators.Base.extend({
         this.log(chalk.green(' ✓', chalk.white('------------>>> 开始 App >>>--------------')));
         this.mkdir('app');
         this.mkdir('app/js');
-        this.mkdir('app/css');
     if (this.includeSass) {
         this.directory('app/sass', 'app/sass');
     } else if (this.includeStylus) {
@@ -206,8 +204,8 @@ var FisGenerator = yeoman.generators.Base.extend({
         this.directory('app/css', 'app/css');
     }
         this.mkdir('app/img');
-        this.mkdir('dist');
-        this.mkdir('test');
+        //this.mkdir('dist');
+        //this.mkdir('test');
         this.template('app/index.html');
         this.template('abc.json');
         //this.log('Directories initialization done!');

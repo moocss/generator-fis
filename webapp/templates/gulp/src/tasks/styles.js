@@ -18,9 +18,9 @@ gulp.task('styles', function () {<% if (includeSass) { %>
          }))<% } else { %>
     return gulp.src('app/css/**/*.css')<% } %>
         .pipe($.autoprefixer('last 1 version'))
-        .pipe(gulp.dest('dist/css'))
+        .pipe(gulp.dest('.tmp/css'))
         .pipe($.rename({suffix: '.min'}))
         .pipe($.csso())
-        .pipe(gulp.dest('dist/css'))
+        .pipe(gulp.dest('.tmp/css'))
         .pipe($.size());
 });

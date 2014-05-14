@@ -9,7 +9,7 @@ gulp.task('watch', ['connect', 'server'], function() {
     var sr = $.livereload();
 
     // watch for changes
-    var reload = function(file) {
+    var reload = function (file) {
         sr.changed(file.path);
     };
     gulp.watch([
@@ -18,8 +18,11 @@ gulp.task('watch', ['connect', 'server'], function() {
         'app/js/**/*.js',
         'app/img/**/*'
     ]).on('change', reload);
-
-    gulp.watch('app/css/**/*', ['styles']);
+    <% if (includeSass) { %>
+    gulp.watch('app/sass/**/*.scss', ['styles']);<% } else if (includeStylus) { %>
+    gulp.watch('app/stylus/**/*.styl', ['styles']);<% } else if (includeLess) { %>
+    gulp.watch('app/less/**/*.less', ['styles']);<% } else { %>
+    gulp.watch('app/css/**/*.css', ['styles']);<% } %>
     gulp.watch('app/js/**/*.js', ['scripts']);
     gulp.watch('app/img/**/*', ['images']);
 

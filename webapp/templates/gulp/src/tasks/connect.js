@@ -10,8 +10,8 @@ var gulp = require('gulp');
  * @return {[type]} [description]
  */
 gulp.task('connect', function() {
-	//connect.logger();
     var app = connect()
+        //.use(connect.logger('dev'))
         .use(livereload())
         .use(connect.static('app'))  //设置root路径作为静态文件服务器
         .use(connect.static('.tmp'))
