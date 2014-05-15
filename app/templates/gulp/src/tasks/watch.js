@@ -12,7 +12,7 @@ gulp.task('watch', ['connect', 'server'], function() {
     var reload = function(file) {
         sr.changed(file.path);
     };
-    gulp.watch('dist/**/*').on('change', reload);
+    gulp.watch(['src/**/*', '.tmp/**/*']).on('change', reload);
     gulp.watch('src/**/*', ['scripts', 'styles', 'images']);
     gulp.watch('src/**/*', ['compass']);
     gulp.watch('bower.json', ['wiredep']);

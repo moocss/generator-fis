@@ -34,6 +34,12 @@ var FisGenerator = yeoman.generators.Base.extend({
 
                     console.log(chalk.green('\nnpm was installed successful. \n'));
 
+                    if (this.useBuild === 'gulp') {
+                        this.spawnCommand('gulp', ['watch']);
+                    } else {
+                        this.spawnCommand('grunt', ['watch']);
+                    }
+
                 }.bind(this)
             });
         });
@@ -74,12 +80,12 @@ var FisGenerator = yeoman.generators.Base.extend({
 
         var prompts = [{
             name: 'projectName',
-            message: chalk.green('(1/7)', chalk.white('Name of Project?')),
+            message: chalk.green('(1/8)', chalk.white('Name of Project?')),
             default: folderName,
             warning: ''
         }, {
             name: 'author',
-            message: chalk.green('(2/7)', chalk.white('Author Name')),
+            message: chalk.green('(2/8)', chalk.white('Author Name')),
             default: abcJSON.author.name,
             validate: function(val) {
                 return val.length > 0 ? true : '你必须输入一个昵称！'
@@ -87,7 +93,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             warning: ''
         }, {
             name: 'email',
-            message: chalk.green('(3/7)', chalk.white('Author Email')),
+            message: chalk.green('(3/8)', chalk.white('Author Email')),
             default: abcJSON.author.email,
             validate: function(val) {
                 return validator.isEmail(val) ? true : '你必须输入一个邮箱地址！';
@@ -95,18 +101,18 @@ var FisGenerator = yeoman.generators.Base.extend({
             warning: ''
         }, {
             name: 'groupName',
-            message: chalk.green('(4/7)', chalk.white('Group Name')),
+            message: chalk.green('(4/8)', chalk.white('Group Name')),
             default: 'fued',
             warning: ''
         }, {
             name: 'useBuild',
-            message: chalk.green('(5/7)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
+            message: chalk.green('(5/8)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
             default: 'Y/n',
             warning: ''
         }, {
             type: 'list',
             name: 'cssCompile',
-            message: chalk.green('(6/7)', chalk.white('请你选择CSS预编译语言?')),
+            message: chalk.green('(6/8)', chalk.white('请你选择CSS预编译语言?')),
             choices: [{
                 name: 'CSS',
                 value: 'includeCSS'
@@ -121,9 +127,14 @@ var FisGenerator = yeoman.generators.Base.extend({
                 value: 'includeLess'
             }],
             default: 2
-        },  {
+        }, {
+            name: 'jquery',
+            message: chalk.green('(7/8)', chalk.white('你要使用jQuery吗?')),
+            default: 'Y/n',
+            warning: ''
+        }, {
             name: 'version',
-            message: chalk.green('(7/7)', chalk.white('Version')),
+            message: chalk.green('(8/8)', chalk.white('Version')),
             default: '1.0.0',
             warning: ''
         }];
@@ -162,7 +173,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.groupName = props.groupName;
             this.version = props.version;
             this.useBuild = ((/^y/i).test(props.useBuild)) ? 'gulp' : 'grunt';
-
+            this.jquery = (/^y/i).test(props.jquery);
             var cssCompile = this.cssCompile = props.cssCompile;
 
             function hasFeature(feat) {
@@ -193,15 +204,19 @@ var FisGenerator = yeoman.generators.Base.extend({
     app: function() {
         this.log(chalk.green(' ✓', chalk.white('------------>>> 开始 App >>>--------------')));
         this.mkdir('app');
+    if(this.jquery){
+        this.directory('app/js');
+    }else{
         this.mkdir('app/js');
+    }
     if (this.includeSass) {
-        this.directory('app/sass', 'app/sass');
+        this.directory('app/sass');
     } else if (this.includeStylus) {
-        this.directory('app/stylus', 'app/stylus');
+        this.directory('app/stylus');
     } else if (this.includeLess) {
-        this.directory('app/less', 'app/less');
+        this.directory('app/less');
     }else {
-        this.directory('app/css', 'app/css');
+        this.directory('app/css');
     }
         this.mkdir('app/img');
         //this.mkdir('dist');

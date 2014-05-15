@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var handleErrors = require('../utilus/handleErrors');
 
 gulp.task('styles', function () {<% if (includeSass) { %>
     return gulp.src('app/sass/**/*.scss')
@@ -21,6 +22,7 @@ gulp.task('styles', function () {<% if (includeSass) { %>
         .pipe(gulp.dest('.tmp/css'))
         .pipe($.rename({suffix: '.min'}))
         .pipe($.csso())
+        .on('error', handleErrors)
         .pipe(gulp.dest('.tmp/css'))
-        .pipe($.size());
+        .pipe($.size())
 });
