@@ -32,11 +32,13 @@ var FisGenerator = yeoman.generators.Base.extend({
                 skipInstall: this.options['skip-install'],
                 callback: function() {
 
-                    console.log(chalk.green('\nnpm was installed successful. \n'));
+                    this.log(chalk.green('\nnpm was installed successful. \n'));
 
                     if (this.useBuild === 'gulp') {
+                        this.log("请稍等...正在 [gulp watch] ...");
                         this.spawnCommand('gulp', ['watch']);
                     } else {
+                        this.log("请稍等...正在 [grunt watch] ...");
                         this.spawnCommand('grunt', ['watch']);
                     }
 

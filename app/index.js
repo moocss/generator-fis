@@ -36,15 +36,15 @@ var FisGenerator = yeoman.generators.Base.extend({
                 callback: function() {
                     //console.log('Everything is ready!');
 
-	                var bowerJson = JSON.parse(fs.readFileSync('./bower.json'));
+	                /*var bowerJson = JSON.parse(fs.readFileSync('./bower.json'));
 	                if (this.jquery) {
 	                    // wire Bower packages to jQuery
 	                    wiredep({
 	                        bowerJson: bowerJson,
 	                        directory: this.srcDir ? 'src/components' : 'bower_components',
-	                        src: 'app/**/*.html'
+	                        src: ''
 	                    });
-	                }
+	                }*/
 	                /*if (this.includeSass) {
 	                    // wire Bower packages to .scss
 	                    wiredep({
@@ -54,13 +54,16 @@ var FisGenerator = yeoman.generators.Base.extend({
 	                    });
 	                }*/
 
+
                     console.log(chalk.green('\nnpm was installed successful. \n'));
 
-                    /*if (this.useBuild === 'gulp') {
-                        this.spawnCommand('gulp', ['build']);
+                    if (this.useBuild === 'gulp') {
+                        this.log("请稍等...正在 [gulp watch] ...");
+                        this.spawnCommand('gulp', ['watch']);
                     } else {
-                        this.spawnCommand('grunt', ['build']);
-                    }*/
+                        this.log("请稍等...正在 [grunt watch] ...");
+                        this.spawnCommand('grunt', ['watch']);
+                    }
 
                 }.bind(this)
             });
@@ -128,7 +131,12 @@ var FisGenerator = yeoman.generators.Base.extend({
             message: chalk.green('(5/10)', chalk.white('Group Name')),
             default: 'fued',
             warning: ''
-        }, {
+        }/*, {
+                name   : 'port',
+                message:  chalk.green('(6/10)', chalk.white('HTTP Server Port'))',
+                default: '9000',
+                warning: ''
+        }*/, {
             name: 'useBuild',
             message: chalk.green('(6/10)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
             default: 'Y/n',
@@ -202,7 +210,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.jquery = (/^y/i).test(props.jquery);
 
             var cssCompile = this.cssCompile = props.cssCompile;
-
+            this.cssSuffix = '.styl';
             function hasFeature(feat) {
                 return cssCompile.indexOf(feat) !== -1;
             }
@@ -212,13 +220,19 @@ var FisGenerator = yeoman.generators.Base.extend({
             switch (cssCompile) {
                 case "includeSass":
                     this.cssCompile = "sass";
+                    this.cssSuffix = ".scss";
                     break;
                 case "includeStylus":
                     this.cssCompile = "stylus";
+                    this.cssSuffix = ".styl";
                     break;
                 case "includeLess":
                     this.cssCompile = "less";
+                    this.cssSuffix = ".less";
                     break;
+                default:
+                    this.cssCompile = "css";
+                    this.cssSuffix = ".css";
             }
 
             this.today = formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss');
@@ -246,31 +260,30 @@ var FisGenerator = yeoman.generators.Base.extend({
     app: function() {
         this.log(chalk.green(' ✓', chalk.white('------------>>> 开始 App >>>--------------')));
         var that = this;
+
+        //创建MCSS
+        function createCssBase(css, suffix) {
+            that.template('app/'+ css +'/base' + suffix, 'src/module/base/base' + suffix);
+            that.template('app/'+ css +'/layout' + suffix, 'src/module/base/layout' + suffix);
+            that.template('app/'+ css +'/modules' + suffix, 'src/module/base/modules' + suffix);
+        }
+
         if (this.srcDir) {
             this.mkdir('src');
             if (this.pagesModulesWidgets) {
                 this.mkdir('src/components');
                 this.mkdir('src/page');
                     this.template('app/index.html', 'src/page/index.html');
+                    this.template('app/'+ this.cssCompile +'/index' + this.cssSuffix, 'src/page/index' + this.cssSuffix);
                 this.mkdir('src/module');
                     this.mkdir('src/module/base');
-                    if (this.includeSass) {
-                        this.directory('app/sass', 'src/module/base/');
-                    } else if (this.includeStylus) {
-                        this.directory('app/stylus', 'src/module/base/');
-                    } else if (this.includeLess) {
-                        this.directory('app/less', 'src/module/base/');
-                    }else {
-                        this.directory('app/css', 'src/module/base/');
-                    }
-                    this.mkdir('src/module/header');
-                    this.mkdir('src/module/content');
+                    createCssBase(this.cssCompile, this.cssSuffix);
+                    /*this.mkdir('src/module/header');
                     this.mkdir('src/module/footer');
                     this.mkdir('src/module/mod');
                     this.mkdir('src/module/box');
                     this.mkdir('src/module/list');
-                    this.mkdir('src/module/menu');
-                    this.mkdir('src/module/tabs');
+                    this.mkdir('src/module/tabs');*/
                 this.mkdir('src/widget');
             }
         }

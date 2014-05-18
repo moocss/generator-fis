@@ -10,12 +10,12 @@ var gulp = require('gulp');
  * @return {[type]} [description]
  */
 gulp.task('connect', function() {
-	//connect.logger();
     var app = connect()
+        //.use(connect.logger('dev'))
         .use(livereload())
-        .use(connect.static('dist'))  //设置root路径作为静态文件服务器
-        .use(connect.directory('dist', {hidden:true})); //列出指定目录下的文件
-
+        .use(connect.static('src/page'))  //设置root路径作为静态文件服务器
+        .use(connect.static('.tmp'))
+        .use(connect.directory('src/page', {hidden:true})); //列出指定目录下的文件
     http.createServer(app)
         .listen(abc.port)
         .on('listening', function() {

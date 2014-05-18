@@ -24,5 +24,5 @@ gulp.task('styles', function () {<% if (includeSass) { %>
         .pipe($.csso())
         .on('error', handleErrors)
         .pipe(gulp.dest('.tmp/css'))
-        .pipe($.size())
+        .pipe($.size());
 });

@@ -67,6 +67,9 @@ var AppGenerator = yeoman.generators.Base.extend({
         }
 
         this.pagesModulesWidgets = pagesModulesWidgets;
+        this.projectName = abcJSON.name;
+        this.useBuild = abcJSON.useBuild;
+        this.cssCompile = abcJSON.cssCompile;
 
         var prompts = [{
                 name: 'mojoName',
@@ -111,9 +114,10 @@ var AppGenerator = yeoman.generators.Base.extend({
         // 如果有page/module/widget/，就把前缀替换回来
         var mojoName = this.pagesModulesWidgets ? this.mojoName.replace(/^([^\/]+)\//i,'') : this.mojoName;
         this.mkdir(mojoName);
-        this.template('index.html', mojoName + '/index.html');
-        this.template('index.js', mojoName+'/index.js');
-        this.template('index.css', mojoName+'/index.' + this.cssCompile);
+        this.mkdir('static/' + mojoName + '/img');
+        this.template('index.html',mojoName + '/index.html');
+        this.template('index.js',mojoName+'/index.js');
+        this.template('index.css',mojoName+'/index.'+this.cssCompile);
 
     }
 });
