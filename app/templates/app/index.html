@@ -4,10 +4,10 @@
 	<meta charset="utf-8" />
 	<title>一个模版页面</title>
     <!-- build:css({.tmp,dist}) css/index.css -->
-    <link href="css/base.css" rel="stylesheet"/>
-    <link href="css/layout.css" rel="stylesheet"/>
-    <link href="css/modules.css" rel="stylesheet"/>
-    <link href="css/index.css" rel="stylesheet"/>
+    <link href="css/module/base/base.css" rel="stylesheet"/>
+    <link href="css/module/base/layout.css" rel="stylesheet"/>
+    <link href="css/module/base/modules.css" rel="stylesheet"/>
+    <link href="css/page/index.css" rel="stylesheet"/>
     <!-- endbuild -->
 </head>
 <body>
@@ -30,9 +30,7 @@
     		</p>
     	</div>
     </div>
-    <% if (jquery) { %>
-    <script src="js/libs/jquery.min.js"></script>
-    <script src="js/site.js"></script>
-    <% } %>
+    <script src="js/components/jquery/1.8.3/jquery.min.js"></script>
+    <script src="js/page/index.js"></script>
 </body>
 </html>

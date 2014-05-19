@@ -107,14 +107,19 @@ var FisGenerator = yeoman.generators.Base.extend({
             default: 'fued',
             warning: ''
         }, {
+            name: 'port',
+            message:  chalk.green('(5/8)', chalk.white('HTTP Server Port')),
+            default: '9000',
+            warning: ''
+        },{
             name: 'useBuild',
-            message: chalk.green('(5/8)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
+            message: chalk.green('(6/8)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
             default: 'Y/n',
             warning: ''
         }, {
             type: 'list',
             name: 'cssCompile',
-            message: chalk.green('(6/8)', chalk.white('请你选择CSS预编译语言?')),
+            message: chalk.green('(7/8)', chalk.white('请你选择CSS预编译语言?')),
             choices: [{
                 name: 'CSS',
                 value: 'includeCSS'
@@ -129,11 +134,6 @@ var FisGenerator = yeoman.generators.Base.extend({
                 value: 'includeLess'
             }],
             default: 2
-        }, {
-            name: 'jquery',
-            message: chalk.green('(7/8)', chalk.white('你要使用jQuery吗?')),
-            default: 'Y/n',
-            warning: ''
         }, {
             name: 'version',
             message: chalk.green('(8/8)', chalk.white('Version')),
@@ -173,6 +173,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.author = props.author;
             this.email = props.email;
             this.groupName = props.groupName;
+            this.port = props.port;
             this.version = props.version;
             this.useBuild = ((/^y/i).test(props.useBuild)) ? 'gulp' : 'grunt';
             this.jquery = (/^y/i).test(props.jquery);

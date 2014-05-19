@@ -4,7 +4,7 @@
     "type": "fis",
     "group": "<%= groupName %>",
     "src": "<%= srcDir %>",
-    "port": "9000",
+    "port": "<%= port %>",
     "root": "<%= root %>",
     "useBuild": "<%= useBuild %>",
     "cssCompile": "<%= cssCompile %>",

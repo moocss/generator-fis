@@ -3,7 +3,7 @@
     "desc": "描述一下你的项目！",
     "type": "fis",
     "group": "<%= groupName %>",
-    "port": "9000",
+    "port": "<%= port %>",
     "useBuild": "<%= useBuild %>",
     "cssCompile": "<%= cssCompile %>",
     "version": "<%= version %>",

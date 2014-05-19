@@ -5,7 +5,7 @@ gulp.task('images', function () {
     return gulp.src(['static/**/*.png','static/**/*.jpg','static/**/*.gif','static/**/*.jpeg'])
     	.pipe($.changed('dist/img/**/*')) // Ignore unchanged files
         .pipe($.cache($.imagemin({
-            optimizationLevel: 3,
+            optimizationLevel: 5,
             progressive: true,
             interlaced: true
         })))

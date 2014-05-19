@@ -131,20 +131,20 @@ var FisGenerator = yeoman.generators.Base.extend({
             message: chalk.green('(5/10)', chalk.white('Group Name')),
             default: 'fued',
             warning: ''
-        }/*, {
-                name   : 'port',
-                message:  chalk.green('(6/10)', chalk.white('HTTP Server Port'))',
-                default: '9000',
-                warning: ''
-        }*/, {
+        }, {
+            name: 'port',
+            message:  chalk.green('(6/10)', chalk.white('HTTP Server Port')),
+            default: '9000',
+            warning: ''
+        }, {
             name: 'useBuild',
-            message: chalk.green('(6/10)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
+            message: chalk.green('(7/10)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
             default: 'Y/n',
             warning: ''
         }, {
             type: 'list',
             name: 'cssCompile',
-            message: chalk.green('(7/10)', chalk.white('请你选择CSS预编译语言?')),
+            message: chalk.green('(8/10)', chalk.white('请你选择CSS预编译语言?')),
             choices: [{
                 name: 'CSS',
                 value: 'includeCSS'
@@ -159,11 +159,6 @@ var FisGenerator = yeoman.generators.Base.extend({
                 value: 'includeLess'
             }],
             default: 2
-        }, {
-            name: 'jquery',
-            message: chalk.green('(8/10)', chalk.white('你要使用jQuery吗?')),
-            default: 'Y/n',
-            warning: ''
         }, {
             name: 'version',
             message: chalk.green('(9/10)', chalk.white('Version')),
@@ -203,6 +198,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.author = props.author;
             this.email = props.email;
             this.groupName = props.groupName;
+            this.port = props.port;
             this.version = props.version;
             this.srcDir = (/^y/i).test(props.srcDir);
             this.root = path.resolve('./');
@@ -272,9 +268,11 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.mkdir('src');
             if (this.pagesModulesWidgets) {
                 this.mkdir('src/components');
+                    this.directory('app/libs', 'src/components');
                 this.mkdir('src/page');
                     this.template('app/index.html', 'src/page/index.html');
                     this.template('app/'+ this.cssCompile +'/index' + this.cssSuffix, 'src/page/index' + this.cssSuffix);
+                    this.template('app/index.js', 'src/page/index.js');
                 this.mkdir('src/module');
                     this.mkdir('src/module/base');
                     createCssBase(this.cssCompile, this.cssSuffix);
