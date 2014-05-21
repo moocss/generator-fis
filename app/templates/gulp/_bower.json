@@ -1,6 +1,23 @@
 {
     "name": "<%= projectName %>",
+    "version": "0.0.1",
+    "license": "MIT",
     "private": true,
-    "dependencies": {},
-    "devDependencies": {}
+    "dependencies": {<% if(includejQuery){%>
+        "jquery": "~1.8.3"<% if(includeHtml5shiv || includeSeajs || includeRequirejs) {%>,<% }} if(includeHtml5shiv){%>
+        "html5shiv": "~3.7.2"<% if(includeSeajs || includeRequirejs) {%>,<% }} if(includeRequirejs){ %>
+        "requirejs": "~2.1.11"<% if(includeSeajs) {%>,<% }} if(includeSeajs){%>
+        "seajs": "git://github.com/seajs/seajs.git#~2.2.1"<% } %>
+    },
+    "devDependencies": {},
+    "ignore": [
+        "**/.*",
+        "docs",
+        "doc",
+        "tests",
+        "test",
+        "node_modules",
+        ".tmp"
+    ]
 }
+

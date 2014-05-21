@@ -31,6 +31,6 @@
     "require": false,
     "define": false,
     "$": false,
-    "jQuery": false
+    "jquery": false
   }
 }

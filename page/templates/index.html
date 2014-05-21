@@ -1,16 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=IE8,chrome=1"/>
-  <title></title>
-  <meta name="description" content=""/>
-  <meta name="keywords" content=""/>
-  <link type="text/css" rel="stylesheet" href="css/base.css"/>
-  <link type="text/css" rel="stylesheet" href="css/index.css"/>
-  <script type="text/javascript" src="js/" ></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= projectName %> - <%= modName %> Demo</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- build:css({.tmp,dist}) css/<%= pageName %>.css -->
+    <link href="../css/module/base/base.css" rel="stylesheet" />
+    <link href="../css/module/base/layout.css" rel="stylesheet" />
+    <link href="../css/module/base/modules.css" rel="stylesheet" />
+    <link href="../css/<%= mojoName %>/index.css" rel="stylesheet" />
+    <!-- endbuild -->
 </head>
 <body>
-
+	<h1><%= projectName %> - <%= modName %> Demo</h1>
+    <!-- build:js({.tmp,dist}) js/site.js-->
+    <script src="../js/components/jquery/jquery.min.js"></script>
+    <script src="../js/<%= mojoName %>/index.js"></script>
+    <!-- endbuild -->
 </body>
 </html>

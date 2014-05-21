@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 var paths = {
-    all: ['src/**/*.html', '.tmp/css/**/*.css', '.tmp/js/**/*.js', 'src/js/**/*.js', 'src/img/**/*', 'static/**/*'],
+    all: ['src/**/*', '.tmp/css/**/*', 'static/**/*'],
     styles: <%
     if (includeSass) { %> ['src/page/**/*.scss', 'src/module/**/*.scss', 'src/widget/**/*.scss'], <%
     } else if (includeStylus) { %> ['src/page/**/*.styl', 'src/module/**/*.styl', 'src/widget/**/*.styl'], <%

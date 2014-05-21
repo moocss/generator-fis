@@ -88,8 +88,10 @@ var AppGenerator = yeoman.generators.Base.extend({
             var _tname = props.mojoName;
 
             this.mojoName = this.pagesModulesWidgets ? this.pagesModulesWidgets + '/' + props.mojoName : props.mojoName;// your-mod-name
-
             this.modName = parseMojoName(_tname).replace(/^(~|-)/,'');//YourModName
+
+            // 如果有page/module/widget/，就把前缀替换回来
+            this.pageName = this.pagesModulesWidgets ? this.mojoName.replace(/^([^\/]+)\//i,'') : this.mojoName;
 
             this.packageName = abcJSON.name; // project-name
             this.projectName = parseMojoName(this.packageName); //ProjectName
@@ -108,12 +110,10 @@ var AppGenerator = yeoman.generators.Base.extend({
 
     files: function() {
 
-        // 如果有page/module/widget/，就把前缀替换回来
-        var mojoName = this.pagesModulesWidgets ? this.mojoName.replace(/^([^\/]+)\//i,'') : this.mojoName;
-        this.mkdir(mojoName);
-        this.template('index.html', mojoName + '/index.html');
-        this.template('index.js', mojoName+'/index.js');
-        this.template('index.css', mojoName+'/index.' + this.cssCompile);
+        this.mkdir(this.pageName);
+        this.template('index.html', this.pageName + '/index.html');
+        this.template('index.js', this.pageName+'/index.js');
+        this.template('index.css', this.pageName+'/index.' + this.cssCompile);
 
     }
 });

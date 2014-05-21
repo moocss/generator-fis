@@ -70,6 +70,10 @@ var FisGenerator = yeoman.generators.Base.extend({
         });
     },
 
+    hasFeature: function (list, feat) {
+        return (list || []).indexOf(feat) !== -1;
+    },
+
     askFor: function() {
         var done = this.async();
 
@@ -102,17 +106,17 @@ var FisGenerator = yeoman.generators.Base.extend({
 
         var prompts = [{
             name: 'projectName',
-            message: chalk.green('(1/10)', chalk.white('Name of Project?')),
+            message: chalk.green('(1/11)', chalk.white('Name of Project?')),
             default: folderName,
             warning: ''
         }, {
             name: 'srcDir',
-            message: chalk.green('(2/10)', chalk.white('Create', chalk.red.bold('"src"'), 'directory?')),
+            message: chalk.green('(2/11)', chalk.white('Create', chalk.red.bold('"src"'), 'directory?')),
             default: 'Y/n',
             warning: ''
         }, {
             name: 'author',
-            message: chalk.green('(3/10)', chalk.white('Author Name')),
+            message: chalk.green('(3/11)', chalk.white('Author Name')),
             default: abcJSON.author.name,
             validate: function(val) {
                 return val.length > 0 ? true : '你必须输入一个昵称！'
@@ -120,7 +124,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             warning: ''
         }, {
             name: 'email',
-            message: chalk.green('(4/10)', chalk.white('Author Email')),
+            message: chalk.green('(4/11)', chalk.white('Author Email')),
             default: abcJSON.author.email,
             validate: function(val) {
                 return validator.isEmail(val) ? true : '你必须输入一个邮箱地址！';
@@ -128,23 +132,44 @@ var FisGenerator = yeoman.generators.Base.extend({
             warning: ''
         }, {
             name: 'groupName',
-            message: chalk.green('(5/10)', chalk.white('Group Name')),
+            message: chalk.green('(5/11)', chalk.white('Group Name')),
             default: 'fued',
             warning: ''
         }, {
             name: 'port',
-            message:  chalk.green('(6/10)', chalk.white('HTTP Server Port')),
+            message:  chalk.green('(6/11)', chalk.white('HTTP Server Port')),
             default: '9000',
             warning: ''
         }, {
             name: 'useBuild',
-            message: chalk.green('(7/10)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
+            message: chalk.green('(7/11)', chalk.white('Would you like to use Gulp(Y) or Grunt(n)?')),
             default: 'Y/n',
             warning: ''
         }, {
+            type: 'checkbox',
+            name: 'components',
+            message: chalk.green('(8/11)', chalk.white('请你选择想要的Components?')),
+            choices: [{
+              name: 'jquery',
+              value: 'includejQuery',
+              checked: true
+            }, {
+              name: 'html5shiv',
+              value: 'includeHtml5shiv',
+              checked: true
+            }, {
+              name: 'requirejs',
+              value: 'includeRequirejs',
+              checked: true
+            }, {
+              name: 'seajs',
+              value: 'includeSeajs',
+              checked: false
+            }]
+        }, {
             type: 'list',
             name: 'cssCompile',
-            message: chalk.green('(8/10)', chalk.white('请你选择CSS预编译语言?')),
+            message: chalk.green('(9/11)', chalk.white('请你选择想要的CSS预编译语言?')),
             choices: [{
                 name: 'CSS',
                 value: 'includeCSS'
@@ -161,7 +186,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             default: 2
         }, {
             name: 'version',
-            message: chalk.green('(9/10)', chalk.white('Version')),
+            message: chalk.green('(10/11)', chalk.white('Version')),
             default: '1.0.0',
             warning: ''
         }];
@@ -205,14 +230,19 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.useBuild = ((/^y/i).test(props.useBuild)) ? 'gulp' : 'grunt';
             this.jquery = (/^y/i).test(props.jquery);
 
+            // Components
+            var component = this.component = props.components;
+            this.includejQuery = this.hasFeature(component, 'includejQuery');
+            this.includeHtml5shiv = this.hasFeature(component, 'includeHtml5shiv');
+            this.includeRequirejs = this.hasFeature(component, 'includeRequirejs');
+            this.includeSeajs = this.hasFeature(component, 'includeSeajs');
+
+            // CSS Compile
             var cssCompile = this.cssCompile = props.cssCompile;
             this.cssSuffix = '.styl';
-            function hasFeature(feat) {
-                return cssCompile.indexOf(feat) !== -1;
-            }
-            this.includeSass = hasFeature('includeSass');
-            this.includeStylus = hasFeature('includeStylus');
-            this.includeLess = hasFeature('includeLess');
+            this.includeSass = this.hasFeature(cssCompile, 'includeSass');
+            this.includeStylus = this.hasFeature(cssCompile, 'includeStylus');
+            this.includeLess = this.hasFeature(cssCompile, 'includeLess');
             switch (cssCompile) {
                 case "includeSass":
                     this.cssCompile = "sass";
@@ -236,7 +266,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             if (this.srcDir) {
                 this.prompt([{
                     name: 'pagesModulesWidgets',
-                    message: chalk.green('(10/10)', chalk.white('Create', chalk.red.bold('"src/page[module|widget]"'), 'directory?')),
+                    message: chalk.green('(11/11)', chalk.white('Create', chalk.red.bold('"src/page[module|widget]"'), 'directory?')),
                     default: 'Y/n',
                     warning: ''
                 }], function(props) {
@@ -268,7 +298,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.mkdir('src');
             if (this.pagesModulesWidgets) {
                 this.mkdir('src/components');
-                    this.directory('app/libs', 'src/components');
+                    //this.directory('app/libs', 'src/components');
                 this.mkdir('src/page');
                     this.template('app/index.html', 'src/page/index.html');
                     this.template('app/'+ this.cssCompile +'/index' + this.cssSuffix, 'src/page/index' + this.cssSuffix);
