@@ -239,7 +239,7 @@ var FisGenerator = yeoman.generators.Base.extend({
 
             // CSS Compile
             var cssCompile = this.cssCompile = props.cssCompile;
-            this.cssSuffix = '.styl';
+            this.cssSuffix = '.css';
             this.includeSass = this.hasFeature(cssCompile, 'includeSass');
             this.includeStylus = this.hasFeature(cssCompile, 'includeStylus');
             this.includeLess = this.hasFeature(cssCompile, 'includeLess');

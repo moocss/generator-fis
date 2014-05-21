@@ -70,14 +70,6 @@ gulp publish    发布项目
 
 ### Options
 
-* `--appPath`
-
-  Generate scaffold into a custom directory.
-
-* `--requirejs`
-
-  Generate scaffolds using RequireJS (AMD) Loader. By default check if project uses RequireJS.
-
 * `--skip-install`
 
   Skips the automatic execution of `bower` and `npm` after
@@ -105,14 +97,16 @@ site
 	src
 	    components  //来自网络的bower_components
 		page //模板文件目录
+			page-1
+				/index.html
+				/index.css
+				/index.js
+			...
 		module //页面模块,增进页面结构(模板组件,CSS组件)
 		    base
-		    	/rest.css
-		    	/common.css
-		    	/grid.css
-				/global.js
 				/base.css
-				/util.js
+				/layout.css
+				/modules.css
 			header
 				/index.js
 				/index.css
@@ -120,7 +114,6 @@ site
 			footer
 			content
 			sidebar
-			main-content
 			nav
 			menu
 			...
@@ -141,24 +134,22 @@ site
 	doc
 	dist
 	    components
-		proj-name
-			1.0.0
-				images
-					icon
-					_res
-					/sp.png
-				js
-					libs
-					/global.js
-				css
-					/base.css
-					/page.css
-					/page-proj.css
-				index.html
-				page.html
-			1.0.1
-			1.0.2
-			...
+		1.0.0
+			images
+				/icon
+				/_res
+				/sp.png
+			/js
+				/libs
+				/global.js
+			/css
+				/base.css
+				/page.css
+				/page-proj.css
+			/index.html
+			/page.html
+		1.0.1
+		1.0.2
 		...
 	static
 		*.jpg

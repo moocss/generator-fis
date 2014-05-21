@@ -2,15 +2,15 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 var paths = {
-    all: ['src/**/*', '.tmp/css/**/*', 'static/**/*'],
+    all: ['src/**/*', '.tmp/**/*', 'static/**/*'],
     styles: <%
-    if (includeSass) { %> ['src/page/**/*.scss', 'src/module/**/*.scss', 'src/widget/**/*.scss'], <%
-    } else if (includeStylus) { %> ['src/page/**/*.styl', 'src/module/**/*.styl', 'src/widget/**/*.styl'], <%
-    } else if (includeLess) { %> ['src/page/**/*.less', 'src/module/**/*.less', 'src/widget/**/*.less'], <%
-    } else { %> ['src/page/**/*.css', 'src/module/**/*.css', 'src/widget/**/*.css'], <%
+    if (includeSass) { %> ['src/**/*.scss'], <%
+    } else if (includeStylus) { %> ['src/**/*.styl'], <%
+    } else if (includeLess) { %> ['src/**/*.less'], <%
+    } else { %> ['src/**/*.css'], <%
     } %>
-    scripts: ['src/page/**/*.js', 'src/module/**/*.js', 'src/widget/**/*.js'],
-    images: ['src/page/**/*', 'src/module/**/*', 'src/widget/**/*', 'static/**/*']
+    scripts: ['src/**/*.js'],
+    images: ['src/**/*.png', 'src/**/*.jpg', 'src/**/*.gif', 'src/**/*.jpeg', 'static/**/*.png', 'static/**/*.jpg', 'static/**/*.gif', 'static/**/*.jpeg']
 };
 
 /**

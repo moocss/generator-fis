@@ -67,6 +67,27 @@ var AppGenerator = yeoman.generators.Base.extend({
         }
 
         this.pagesModulesWidgets = pagesModulesWidgets;
+        this.projectName = abcJSON.name;
+        this.useBuild = abcJSON.useBuild;
+        var cssCompile = this.cssCompile = abcJSON.cssCompile;
+        this.author = abcJSON.author.name;
+        this.email = abcJSON.author.email;
+        this.groupName = abcJSON.groupName;
+        this.version = abcJSON.version;
+        this.cssSuffix = ".css";
+        switch (cssCompile) {
+            case "sass":
+                this.cssSuffix = ".scss";
+                break;
+            case "stylus":
+                this.cssSuffix = ".styl";
+                break;
+            case "less":
+                this.cssSuffix = ".less";
+                break;
+            default:
+                this.cssSuffix = ".css";
+        }
 
         var prompts = [{
                 name: 'mojoName',
@@ -90,15 +111,8 @@ var AppGenerator = yeoman.generators.Base.extend({
             this.mojoName = this.pagesModulesWidgets ? this.pagesModulesWidgets + '/' + props.mojoName : props.mojoName;// your-mod-name
 
             this.modName = parseMojoName(_tname).replace(/^(~|-)/,'');//YourModName
-
-            this.packageName = abcJSON.name; // project-name
-            this.projectName = parseMojoName(this.packageName); //ProjectName
-            this.cssCompile = abcJSON.cssCompile;
-            this.useBuild = abcJSON.useBuild;
-            this.author = abcJSON.author.name;
-            this.email = abcJSON.author.email;
-            this.groupName = abcJSON.groupName;
-            this.version = abcJSON.version;
+            // 如果有page/module/widget/，就把前缀替换回来
+            this.pageName = this.pagesModulesWidgets ? this.mojoName.replace(/^([^\/]+)\//i,'') : this.mojoName;
 
             done();
 
@@ -108,12 +122,10 @@ var AppGenerator = yeoman.generators.Base.extend({
 
     files: function() {
 
-        // 如果有page/module/widget/，就把前缀替换回来
-        var mojoName = this.pagesModulesWidgets ? this.mojoName.replace(/^([^\/]+)\//i,'') : this.mojoName;
-        this.mkdir(mojoName);
-        this.template('index.html', mojoName + '/index.html');
-        this.template('index.js', mojoName+'/index.js');
-        this.template('index.css', mojoName+'/index.' + this.cssCompile);
+        this.mkdir(this.pageName);
+        this.template('index.html', this.pageName + '/index.html');
+        this.template('index.js', this.pageName+'/index.js');
+        this.template('index.css', this.pageName+'/index' + this.cssSuffix);
 
     }
 });
