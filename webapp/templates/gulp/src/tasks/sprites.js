@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('sprites', function () {
-    gulp.src('./src/img/*.png')
+    gulp.src('app/img/**/*.png')
       .pipe($.sprite('sprites.png', {
         imagePath: 'dist/img',
 		<% if (includeSass) { %>
@@ -19,5 +19,5 @@ gulp.task('sprites', function () {
         preprocessor: 'css'
 		<% } %>
       }))
-      .pipe(gulp.dest('./dist/img/'));
+      .pipe(gulp.dest('dist/img'));
 });

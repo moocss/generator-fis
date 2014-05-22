@@ -1,22 +1,32 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8"/>
     <title><%= projectName %> - <%= modName %> Demo</title>
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <!-- build:css({.tmp,dist}) css/<%= pageName %>.css -->
-    <link href="../css/module/base/base.css" rel="stylesheet" />
-    <link href="../css/module/base/layout.css" rel="stylesheet" />
-    <link href="../css/module/base/modules.css" rel="stylesheet" />
-    <link href="../css/<%= mojoName %>/index.css" rel="stylesheet" />
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <!-- build:css({.tmp,dist}) css/index.css -->
+    <link href="../css/module/base/base.css" rel="stylesheet"/>
+    <link href="../css/module/base/layout.css" rel="stylesheet"/>
+    <link href="../css/module/base/modules.css" rel="stylesheet"/>
+    <link href="../css/page/index.css" rel="stylesheet"/>
     <!-- endbuild -->
+    <% if (includeHtml5shiv) { %>
+    <!--[if lt IE 9]><script src="../js/components/html5shiv/dist/html5shiv.min.js"></script><![endif]-->
+    <% } %>
 </head>
 <body>
-	<h1><%= projectName %> - <%= modName %> Demo</h1>
+    <!--#include file="../module/header/index.html" -->
+    <div id="content">
+    内容模块在此...
+    </div><!-- #content -->
+    <!--#include file="../module/footer/index.html" -->
     <!-- build:js({.tmp,dist}) js/site.js-->
-    <script src="../js/components/jquery/jquery.min.js"></script>
-    <script src="../js/<%= mojoName %>/index.js"></script>
+    <% if (includejQuery) {%>
+    <script src="../js/components/jquery/jquery.min.js"></script><% } if (includeRequirejs) { %>
+    <script src="../js/components/requirejs/require.js"></script><% } if (includeSeajs) { %>
+    <script src="../js/components/seajs/seajs.js"></script><% } %>
+    <script src="../js/page/index.js"></script>
     <!-- endbuild -->
 </body>
 </html>

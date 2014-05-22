@@ -11,9 +11,9 @@ var abc  = require('../../abc.json');
  */
 gulp.task('connect', function() {
     var app = connect()
-        .use(ssi('src/page'))
         .use(connect.logger('dev'))
         .use(livereload())
+        .use(ssi('src/page'))
         .use(connect.static('src/page'))  //设置root路径作为静态文件服务器
         .use(connect.static('.tmp'))
         .use(connect.directory('src/page', {hidden:true})); //列出指定目录下的文件
