@@ -73,6 +73,7 @@ var AppGenerator = yeoman.generators.Base.extend({
         this.author = abcJSON.author.name;
         this.email = abcJSON.author.email;
         this.groupName = abcJSON.groupName;
+        this.port = abcJSON.port;
         this.version = abcJSON.version;
         this.cssSuffix = ".css";
         switch (cssCompile) {

@@ -5,13 +5,14 @@ var livereload = require('connect-livereload');
 var ssi = require('simple-ssi');
 var abc  = require('../../abc.json');
 
+
 /**
  * [description]
  * @return {[type]} [description]
  */
-gulp.task('connect', function() {
+gulp.task('tpl', function() {
     var app = connect()
-        .use(ssi('src/page'))
+    	.use(ssi('src/page'))
         .use(connect.logger('dev'))
         .use(livereload())
         .use(connect.static('src/page'))  //设置root路径作为静态文件服务器

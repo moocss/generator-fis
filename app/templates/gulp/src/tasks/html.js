@@ -5,7 +5,7 @@ gulp.task('html', ['styles', 'scripts'], function () {
     var jsFilter = $.filter('**/*.js');
     var cssFilter = $.filter('**/*.css');
 
-    return gulp.src('src/**/*.html')
+    return gulp.src(['src/**/*.html', '!src/components/**/*.html'])
         .pipe($.useref.assets())
         .pipe(jsFilter)
         .pipe($.uglify())
@@ -15,6 +15,6 @@ gulp.task('html', ['styles', 'scripts'], function () {
         .pipe(cssFilter.restore())
         .pipe($.useref.restore())
         .pipe($.useref())
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('dist/<%= version %>'))
         .pipe($.size());
 });

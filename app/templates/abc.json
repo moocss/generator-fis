@@ -1,5 +1,5 @@
 {
-    "name": "<%= packageName %>",
+    "name": "<%= projectName %>",
     "desc": "描述一下你的项目！",
     "type": "fis",
     "group": "<%= groupName %>",
