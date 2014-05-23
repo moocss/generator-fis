@@ -5,7 +5,12 @@
     "group": "<%= groupName %>",
     "src": "<%= srcDir %>",
     "port": "<%= port %>",
-    "root": "<%= root %>",
+    "components": {<% if(includejQuery){%>
+        "jquery": "true"<% if(includeHtml5shiv || includeSeajs || includeRequirejs) {%>,<% }} if(includeHtml5shiv){%>
+        "html5shiv": "true"<% if(includeSeajs || includeRequirejs) {%>,<% }} if(includeRequirejs){ %>
+        "requirejs": "true"<% if(includeSeajs) {%>,<% }} if(includeSeajs){%>
+        "seajs": "true"<% } %>
+    },
     "useBuild": "<%= useBuild %>",
     "cssCompile": "<%= cssCompile %>",
     "version": "<%= version %>",

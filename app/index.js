@@ -226,7 +226,7 @@ var FisGenerator = yeoman.generators.Base.extend({
             this.port = props.port;
             this.version = props.version;
             this.srcDir = (/^y/i).test(props.srcDir);
-            this.root = path.resolve('./');
+            //this.root = path.resolve('./');
             this.useBuild = ((/^y/i).test(props.useBuild)) ? 'gulp' : 'grunt';
             this.jquery = (/^y/i).test(props.jquery);
 

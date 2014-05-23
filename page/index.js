@@ -58,6 +58,15 @@ var AppGenerator = yeoman.generators.Base.extend({
             abcJSON.group = 'groupName';
         }
 
+        if (!abcJSON.components) {
+            abcJSON.components = {
+                "jquery": false,
+                "html5shiv": false,
+                "requirejs": false,
+                "seajs": false
+            }
+        }
+
         if (!abcJSON.useBuild) {
             abcJSON.useBuild = 'gulp';
         }
@@ -75,6 +84,13 @@ var AppGenerator = yeoman.generators.Base.extend({
         this.groupName = abcJSON.groupName;
         this.port = abcJSON.port;
         this.version = abcJSON.version;
+
+        // Components
+        this.includejQuery = abcJSON.components.jquery;
+        this.includeHtml5shiv = abcJSON.components.html5shiv;
+        this.includeRequirejs = abcJSON.components.requirejs;
+        this.includeSeajs = abcJSON.components.seajs;
+
         this.cssSuffix = ".css";
         switch (cssCompile) {
             case "sass":
